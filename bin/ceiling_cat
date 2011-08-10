@@ -1,0 +1,7 @@
+#!/usr/bin/env ruby
+require 'rubygems'
+require 'ceiling_cat'
+
+load ARGV[0] || './Chatfile'
+
+CeilingCat::Setup.new.connect
