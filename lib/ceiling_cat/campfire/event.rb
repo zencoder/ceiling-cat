@@ -2,8 +2,15 @@ module CeilingCat
   module Campfire
     class Event < CeilingCat::Event
       
-      def handle
-        puts "#{user.short_name} says: #{@body} at #{@time}"
+      def type
+        case @type
+        when "EnterMessage"
+          :entrance
+        when "TextMessage"
+          :chat
+        when "LeaveMessage", "KickMessage"
+          :exit
+        end
       end
       
     end

@@ -10,17 +10,20 @@ module CeilingCat
       @time = opts[:time] || Time.now
     end
     
-    def handle
-      puts "#{user.short_name} says: #{@body} at #{@time}"
-      # @room.say "What up #{user}"
+    def handle 
       @room.plugins.each do |plugin|
+        puts "running #{plugin}"
         begin
           response = plugin.new(self).handle
           break if response == true
         rescue => e
-          @room.say("Whoops - there was a problem with a plugin")
+          @room.say("Whoops - there was a problem with #{plugin}: #{e.inspect}")
         end
       end
+    end
+    
+    def type # assume that all messages are just text unless the specific room type overrides it.
+      :chat
     end
   end
 end

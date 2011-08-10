@@ -17,11 +17,11 @@ module CeilingCat
     end
 
     def is_registered?
-      @type.to_s.downcase == 'member'
+      @role.to_s.downcase == 'member'
     end
 
     def is_guest?
-      @type.to_s.downcase == 'guest' || @type.to_s.nil?
+      @role.to_s.downcase == 'guest' || @type.to_s.nil?
     end
   end
 end

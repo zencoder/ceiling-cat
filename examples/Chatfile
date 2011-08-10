@@ -1,0 +1,20 @@
+# Require your plugins here
+require 'ceiling_cat/plugin/calc'
+require 'ceiling_cat/plugin/greeter'
+
+CeilingCat::Setup.configure do |config|
+  config.service = 'campfire'
+  config.username = 'zencoder'
+  config.token = '12345abcde'
+  config.room = 'Test Room'
+  config.ssl = true
+  
+  config.plugins = [CeilingCat::Plugin::Greeter,CeilingCat::Plugin::Calc]
+  
+  # Some plugins require storage
+  # Robut::Storage::YamlStore.file = ".robut"
+  # config.store = Robut::Storage::YamlStore
+  
+  # Add a logger if you want to debug the connection
+  # config.logger = Logger.new(STDOUT)
+end
