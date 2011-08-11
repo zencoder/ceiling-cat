@@ -18,12 +18,9 @@ module CeilingCat
       registered_users_in_room.size > 0
     end
     
-    def registered_users_in_room
-      if @registered_users_in_room
-        @registered_users_in_room
-      else
-        []
-      end
+    def registered_users_in_room(reload=false)
+      puts "parent class"
+      @registered_users_in_room || []
     end
     
     def list_of_registered_users_in_room
@@ -40,12 +37,8 @@ module CeilingCat
       unregistered_users_in_room.size > 0
     end
     
-    def unregistered_users_in_room
-      if @unregistered_users_in_room
-        @unregistered_users_in_room
-      else
-        []
-      end
+    def unregistered_users_in_room(reload=false)
+      @unregistered_users_in_room || []
     end
   end
 end

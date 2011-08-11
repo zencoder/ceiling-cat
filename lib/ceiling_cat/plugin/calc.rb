@@ -3,7 +3,7 @@ module CeilingCat
     class Calc < CeilingCat::Plugin::Base
 
       def handle
-        if @body =~ command
+        if body =~ command
           begin
             reply("#{body_without_command} = #{eval body_without_command}")
           rescue

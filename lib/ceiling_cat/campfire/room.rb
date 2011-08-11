@@ -16,7 +16,12 @@ module CeilingCat
             begin
               user = CeilingCat::User.new(event[:user][:name], :id => event[:user][:id], :role => event[:user][:type])
               unless is_me?(user) # Otherwise CC will talk to itself
-                CeilingCat::Campfire::Event.new(self,event[:body], user, :type => event[:type]).handle
+                event = CeilingCat::Campfire::Event.new(self,event[:body], user, :type => event[:type])
+                event.handle
+                # if event.type != :chat # If someone comes or goes, reload the list.
+                #   @registered_users_in_room = registered_users_in_room(true) if user.is_registered?
+                #   @unregistered_users_in_room = unregistered_users_in_room(true) if user.is_guest?
+                # end
               end
             rescue
               say "An error occured with Campfire: #{$!}"
@@ -39,7 +44,9 @@ module CeilingCat
         @campfire_room.users
       end
       
-      def registered_users_in_room
+      def registered_users_in_room(reload=false)
+        puts "child class"
+        # return @registered_users_in_room unless (@registered_users_in_room.nil? || reload)
         @registered_users_in_room = users_in_room.find_all do |user| 
           if user[:type].to_s.downcase == 'member' && !is_me?(CeilingCat::User.new(user[:name], :id => user[:id], :role => user[:type]))
             CeilingCat::User.new(user[:name], :id => user[:id], :role => user[:type])
@@ -48,8 +55,9 @@ module CeilingCat
         super
       end
       
-      def unregistered_users_in_room
-        @registered_users_in_room = users_in_room.find_all do |user| 
+      def unregistered_users_in_room(reload=false)
+        # return @unregistered_users_in_room unless (@unregistered_users_in_room.nil? || reload)
+        @unregistered_users_in_room = users_in_room.find_all do |user| 
           if user[:type].to_s.downcase == 'guest'
             CeilingCat::User.new(user[:name], :id => user[:id], :role => user[:type])
           end
