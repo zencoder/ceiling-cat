@@ -11,6 +11,22 @@ module CeilingCat
         raise NotImplementedError, "Implement in plugin!"
       end
       
+      def self.name
+        self.class.to_s.gsub("CeilingCat::Plugin::","")
+      end
+      
+      def self.description
+        "No description"
+      end
+      
+      def self.commands
+        []
+      end
+      
+      def commands
+        self.class.commands || []
+      end
+      
       def event
         @event
       end
@@ -31,7 +47,7 @@ module CeilingCat
         room.say(message)
       end
       
-      def body_without_command
+      def body_without_command(command=nil)
         body.sub(command,"")
       end
       

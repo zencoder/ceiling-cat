@@ -27,6 +27,7 @@ Gem::Specification.new do |s|
                      "lib/ceiling_cat/campfire/connection.rb",
                      "lib/ceiling_cat/campfire/event.rb",
                      "lib/ceiling_cat/campfire/room.rb",
+                     "lib/ceiling_cat/plugin/about.rb",
                      "lib/ceiling_cat/plugin/calc.rb",
                      "lib/ceiling_cat/plugin/greeter.rb"
                      ]

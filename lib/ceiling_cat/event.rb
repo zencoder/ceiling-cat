@@ -17,7 +17,7 @@ module CeilingCat
           response = plugin.new(self).handle
           break if response == true
         rescue => e
-          @room.say("Whoops - there was a problem with #{plugin}: #{e.inspect}")
+          @room.say("Whoops - there was a problem with #{plugin}: #{e}")
         end
       end
     end
