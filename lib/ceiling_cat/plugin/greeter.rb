@@ -1,7 +1,6 @@
 module CeilingCat
   module Plugin
     class Greeter < CeilingCat::Plugin::Base
-
       def handle
         if event.type == :entrance
           if user.is_guest?
@@ -16,6 +15,7 @@ module CeilingCat
               end
             else
               message << "Hey #{user.name}! Nobody from Zencoder is in Support Chat right now."
+              room.plugin("notifo").new(@event).deliver("#{user.name} has logged in to chat.") if room.plugin_installed?("notifo")
             end
             reply message
           end

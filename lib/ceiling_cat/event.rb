@@ -15,7 +15,7 @@ module CeilingCat
         puts "running #{plugin}"
         begin
           response = plugin.new(self).handle
-          break if response == true
+          break if response.present?
         rescue => e
           @room.say("Whoops - there was a problem with #{plugin}: #{e}")
         end

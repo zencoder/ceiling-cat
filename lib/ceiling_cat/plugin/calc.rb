@@ -1,19 +1,8 @@
 module CeilingCat
   module Plugin
-    class Calc < CeilingCat::Plugin::Base
-
-      def handle
-        if command = commands.find{|command| body =~ command[:regex]}
-          begin
-            reply("#{body_without_command(command[:regex])} = #{eval body_without_command(command[:regex])}")
-          rescue
-            reply ["I couldn't calculate that. Are you sure it's a math equation?", "error: #{$!}"]
-          end
-        end
-      end
-      
+    class Calc < CeilingCat::Plugin::Base      
       def self.commands
-        [{:regex => /^calculate/i, :name => "calculate", :description => "Performs basic math functions - 'calculate 7*5'"}]
+        [{:regex => /^calculate/i, :name => "calculate", :description => "Performs basic math functions - 'calculate 7*5'", :method => "calculate"}]
       end
       
       def self.description
@@ -23,7 +12,23 @@ module CeilingCat
       def self.name
         "Calculator"
       end
-
+      
+      def self.public?
+        true
+      end
+      
+      def calculate
+        begin
+          math = body_without_command(commands.first[:regex]).gsub(/[^\d+-\/*\(\)\.]/,"")
+          if math.length > 0 && math =~ /^\d.+\d$/
+            reply "#{math} = #{eval math}"
+          else
+            reply "I don't think that's an equation. Want to try something else?"
+          end
+        rescue => e
+          raise e
+        end
+      end
     end
   end
 end

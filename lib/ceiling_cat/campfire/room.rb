@@ -12,20 +12,32 @@ module CeilingCat
         puts "Watching room..."
         setup_interrupts
         begin
-          @campfire_room.listen do |event|
+          loop do
             begin
-              user = CeilingCat::User.new(event[:user][:name], :id => event[:user][:id], :role => event[:user][:type])
-              unless is_me?(user) # Otherwise CC will talk to itself
-                event = CeilingCat::Campfire::Event.new(self,event[:body], user, :type => event[:type])
-                event.handle
-                users_in_room(:reload => true) if event.type != :chat # If someone comes or goes, reload the list.
+              Timeout::timeout(30) do
+                @campfire_room.listen do |event|
+                  begin
+                    user = CeilingCat::User.new(event[:user][:name], :id => event[:user][:id], :role => event[:user][:type])
+                    unless is_me?(user) # Otherwise CC will talk to itself
+                      event = CeilingCat::Campfire::Event.new(self,event[:body], user, :type => event[:type])
+                      event.handle
+                      users_in_room(:reload => true) if event.type != :chat # If someone comes or goes, reload the list.
+                    end
+                  rescue => e
+                    say "An error occured with Campfire: #{e}"
+                  end
+                end
               end
-            rescue => e
-              say "An error occured with Campfire: #{e}"
+            rescue Timeout::Error
             end
           end
+        rescue ReloadException => e
+          retry
         rescue StandardError => e
-          raise e
+          e.backtrace.each do |line|
+             puts "Backtrace: #{line}"
+           end
+           retry
         end
       end
       
@@ -72,8 +84,8 @@ module CeilingCat
         end
 
         trap('USR1') do
-          # logger.info "Leaving room"
-          @room.leave if @room
+          puts "Leaving room"
+          @campfire_room.leave if @campfire_room
           # logger.info "Reloading config"
           # config(true)
           # raise ReloadException.new("Rejoin room please, ceiling cat")

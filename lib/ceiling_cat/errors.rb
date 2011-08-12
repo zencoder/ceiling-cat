@@ -12,4 +12,6 @@ module CeilingCat
   class UnsupportedChatServiceError < CeilingCatError; end
   
   class NotImplementedError < CeilingCatError; end
+  
+  class ReloadException < CeilingCatError; end
 end

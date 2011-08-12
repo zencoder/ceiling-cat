@@ -18,10 +18,22 @@ module CeilingCat
       @connection.plugins
     end
     
-    def installed_plugins
+    def config
+      @connection.config
+    end
+    
+    def plugin_installed?(name)
+      !plugin(name).nil?
+    end
+    
+    def plugin(name)
+      plugins.find{|plugin| plugin.name.downcase == name.to_s.downcase || plugin.class == name}
+    end
+    
+    def plugin_descriptions(all=false)
       messages = []
       plugins.each do |plugin|
-        messages << "#{plugin.name}: #{plugin.description}"
+        messages << "#{plugin.name}: #{plugin.description}" if all || plugin.public?
       end
       messages
     end
@@ -29,7 +41,7 @@ module CeilingCat
     def available_commands
       messages = []
       plugins.each do |plugin|
-        if !plugin.commands.empty?
+        if !plugin.commands.empty? && plugin.public?
           messages << "Commands for #{plugin.name}"
           plugin.commands.each do |command|
             messages << "-- #{command[:name]}: #{command[:description]}"
