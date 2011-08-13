@@ -5,7 +5,7 @@ module CeilingCat
     def initialize(name, opts={})
       @name = name
       @id = opts[:id]
-      @role = opts[:role] || :guest
+      @role = opts[:role]
     end
     
     def to_s

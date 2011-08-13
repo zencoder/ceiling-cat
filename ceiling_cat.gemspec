@@ -15,6 +15,7 @@ Gem::Specification.new do |s|
   
   s.add_dependency "tinder"
   s.add_dependency "httparty"
+  s.add_dependency "crack"
 
   s.files         = ["lib/ceiling_cat.rb",
                      "lib/ceiling_cat/setup.rb",
@@ -31,6 +32,7 @@ Gem::Specification.new do |s|
                      "lib/ceiling_cat/plugin/about.rb",
                      "lib/ceiling_cat/plugin/calc.rb",
                      "lib/ceiling_cat/plugin/notifo.rb",
+                     "lib/ceiling_cat/plugin/zencoder_status.rb",
                      "lib/ceiling_cat/plugin/greeter.rb"
                      ]
   s.test_files    = []
