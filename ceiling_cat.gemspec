@@ -10,13 +10,17 @@ base = ["lib/ceiling_cat.rb",
         "lib/ceiling_cat/event.rb",
         "lib/ceiling_cat/user.rb",
         "lib/ceiling_cat/room.rb",
-        "lib/ceiling_cat/plugins/base.rb"]
+        "lib/ceiling_cat/storage/base.rb" ]
 
-plugins = ["lib/ceiling_cat/plugins/about.rb",
+plugins = ["lib/ceiling_cat/plugins/base.rb",
+           "lib/ceiling_cat/plugins/about.rb",
            "lib/ceiling_cat/plugins/calc.rb",
            "lib/ceiling_cat/plugins/notifo.rb",
            "lib/ceiling_cat/plugins/zencoder_status.rb",
            "lib/ceiling_cat/plugins/greeter.rb"]
+           
+storage = ["lib/ceiling_cat/storage/base.rb",
+           "lib/ceiling_cat/storage/yaml.rb"]
  
 campfire = ["lib/ceiling_cat/services/campfire.rb",
             "lib/ceiling_cat/services/campfire/connection.rb",
@@ -38,7 +42,7 @@ Gem::Specification.new do |s|
   s.add_dependency "httparty"
   s.add_dependency "crack"
 
-  s.files         = base + plugins + campfire
+  s.files         = base + plugins + storage + campfire
   s.test_files    = []
   s.executables   = ["ceiling_cat"]
   s.require_paths = ["lib"]

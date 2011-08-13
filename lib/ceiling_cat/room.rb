@@ -30,6 +30,10 @@ module CeilingCat
       plugins.find{|plugin| plugin.name.downcase == name.to_s.downcase || plugin.class == name}
     end
     
+    def store
+      @connection.storage
+    end
+    
     def plugin_descriptions(all=false)
       messages = []
       plugins.each do |plugin|

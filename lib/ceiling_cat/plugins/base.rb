@@ -44,6 +44,10 @@ module CeilingCat
       def room
         event.room
       end
+      
+      def store
+        room.store
+      end
 
       def body
         event.body

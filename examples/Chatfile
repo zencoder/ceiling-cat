@@ -16,7 +16,8 @@ CeilingCat::Setup.configure do |config|
   
   # Some plugins require storage
   # Robut::Storage::YamlStore.file = ".robut"
-  # config.store = Robut::Storage::YamlStore
+  CeilingCat::Storage::Yaml.file = "ceilingcat.yml"
+  config.storage = CeilingCat::Storage::Yaml
   
   # Add a logger if you want to debug the connection
   # config.logger = Logger.new(STDOUT)
