@@ -1,0 +1,19 @@
+Ceiling Cat
+====================
+Is watching you chat. A plugin powered chat bot compatible with multiple chat services, including Campfire.
+
+Installation
+------------
+    gem install ceilingcat
+
+What is Ceiling Cat?
+------------
+Ceiling Cat watches you chat.
+
+Ceiling Cat started as a project at Zencoder to monitor our support chat in Campfire.
+
+How do I work this thing?
+------------
+  $ ceiling_cat
+
+Ceiling Cat will look for a Chatfile containing information about what service to use, what plugins to use, and any other configuration details. Check out an example Chatfile in the examples directory.
