@@ -72,6 +72,16 @@ module CeilingCat
       def body_without_nick
         body.sub(room.me.name,'')
       end
+      
+      def pluralize(n, singular, plural=nil)
+        if n == 1
+            "#{singular}"
+        elsif plural
+            "#{plural}"
+        else
+            "#{singular}s"
+        end
+      end
     end
   end
 end

@@ -1,7 +1,7 @@
 # Require your plugins here
-require 'ceiling_cat/plugin/about'
-require 'ceiling_cat/plugin/calc'
-require 'ceiling_cat/plugin/greeter'
+require 'ceiling_cat/plugins/about'
+require 'ceiling_cat/plugins/calc'
+require 'ceiling_cat/plugins/greeter'
 
 CeilingCat::Setup.configure do |config|
   config.service = 'campfire'

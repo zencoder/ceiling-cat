@@ -2,6 +2,27 @@
 $:.push File.expand_path("../lib", __FILE__)
 require "ceiling_cat/version"
 
+base = ["lib/ceiling_cat.rb",
+        "lib/ceiling_cat/setup.rb",
+        "lib/ceiling_cat/version.rb",
+        "lib/ceiling_cat/connection.rb",
+        "lib/ceiling_cat/errors.rb",
+        "lib/ceiling_cat/event.rb",
+        "lib/ceiling_cat/user.rb",
+        "lib/ceiling_cat/room.rb",
+        "lib/ceiling_cat/plugins/base.rb"]
+
+plugins = ["lib/ceiling_cat/plugins/about.rb",
+           "lib/ceiling_cat/plugins/calc.rb",
+           "lib/ceiling_cat/plugins/notifo.rb",
+           "lib/ceiling_cat/plugins/zencoder_status.rb",
+           "lib/ceiling_cat/plugins/greeter.rb"]
+ 
+campfire = ["lib/ceiling_cat/services/campfire.rb",
+            "lib/ceiling_cat/services/campfire/connection.rb",
+            "lib/ceiling_cat/services/campfire/event.rb",
+            "lib/ceiling_cat/services/campfire/room.rb"]
+
 Gem::Specification.new do |s|
   s.name        = "ceiling_cat"
   s.version     = CeilingCat::VERSION
@@ -17,24 +38,7 @@ Gem::Specification.new do |s|
   s.add_dependency "httparty"
   s.add_dependency "crack"
 
-  s.files         = ["lib/ceiling_cat.rb",
-                     "lib/ceiling_cat/setup.rb",
-                     "lib/ceiling_cat/version.rb",
-                     "lib/ceiling_cat/connection.rb",
-                     "lib/ceiling_cat/errors.rb",
-                     "lib/ceiling_cat/event.rb",
-                     "lib/ceiling_cat/user.rb",
-                     "lib/ceiling_cat/room.rb",
-                     "lib/ceiling_cat/plugin/base.rb",
-                     "lib/ceiling_cat/campfire/connection.rb",
-                     "lib/ceiling_cat/campfire/event.rb",
-                     "lib/ceiling_cat/campfire/room.rb",
-                     "lib/ceiling_cat/plugin/about.rb",
-                     "lib/ceiling_cat/plugin/calc.rb",
-                     "lib/ceiling_cat/plugin/notifo.rb",
-                     "lib/ceiling_cat/plugin/zencoder_status.rb",
-                     "lib/ceiling_cat/plugin/greeter.rb"
-                     ]
+  s.files         = base + plugins + campfire
   s.test_files    = []
   s.executables   = ["ceiling_cat"]
   s.require_paths = ["lib"]

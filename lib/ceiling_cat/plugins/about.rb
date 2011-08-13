@@ -28,7 +28,8 @@ module CeilingCat
       end
       
       def list_employees
-        reply "#{room.list_of_users_in_room(:type => "member")} are Zencoder employees."
+        members = room.list_of_users_in_room(:type => "member")
+        reply "#{members} #{pluralize(members.size, "is a", "are")} Zencoder #{pluralize(members.size, "employee")}."
       end
     end
   end

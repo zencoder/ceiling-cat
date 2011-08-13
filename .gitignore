@@ -3,3 +3,4 @@
 Gemfile.lock
 pkg/*
 Chatfile
+.DS_Store
