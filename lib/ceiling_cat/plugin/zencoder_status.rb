@@ -21,15 +21,18 @@ module CeilingCat
       end
 
       def check
+        messages = []
         events = []
         Timeout::timeout(5) do
           events = Crack::JSON.parse(HTTParty.get("http://status.zencoder.com/api/events.json").body)
         end
         if events.size > 0
-          reply events.collect{|event| "#{event["event"]["title"]} - http://status.zencoder.com/events/#{event["event"]["id"]}"}
+          messages << "Currently known Zencoder isses:"
+          messages << events.collect{|event| "#{event["event"]["title"]} - http://status.zencoder.com/events/#{event["event"]["id"]}"}
         else
-          reply "All systems are go - http://status.zencoder.com"
+          messages << "All systems are go - http://status.zencoder.com"
         end
+        reply messages
       rescue Timeout::Error => e
         nil
       end
