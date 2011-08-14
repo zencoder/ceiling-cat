@@ -2,9 +2,9 @@ module CeilingCat
   module Plugin
     class About < CeilingCat::Plugin::Base
       def self.commands
-        [{:regex => /^!plugins/i, :name => "!plugins", :description => "List of installed plugins.", :method => "list_plugins"},
-         {:regex => /^!commands/i, :name => "!commands", :description => "List of available commands.", :method => "list_commands"},
-         {:regex => /^!employees/i, :name => "!employees", :description => "List of employees in the room.", :method => "list_employees"}]
+        [{:regex => "plugins", :name => "plugins", :description => "List of installed plugins.", :method => "list_plugins"},
+         {:regex => "commands", :name => "commands", :description => "List of available commands.", :method => "list_commands"},
+         {:regex => "employees", :name => "employees", :description => "List of employees in the room.", :method => "list_employees"}]
       end
 
       def self.description
@@ -24,7 +24,9 @@ module CeilingCat
       end
 
       def list_commands
-        reply room.available_commands
+        messages = room.available_commands
+        messages << "Run commands with '![command]' or '#{room.me.name}: [command]'"
+        reply messages
       end
       
       def list_employees

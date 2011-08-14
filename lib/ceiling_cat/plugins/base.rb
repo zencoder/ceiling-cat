@@ -8,7 +8,7 @@ module CeilingCat
       end
 
       def handle
-        if command = commands.find{|command| body =~ command[:regex]}
+        if command = commands.find{|command| body =~ /^(!|#{room.me.name}:?\s*)#{command[:regex]}/i}
           begin
             self.send command[:method]
           rescue => e

@@ -5,7 +5,7 @@ module CeilingCat
   module Plugin
     class ZencoderStatus < CeilingCat::Plugin::Base      
       def self.commands
-        [{:regex => /^!status/i, :name => "!status", :description => "Check the status of Zencoder.", :method => "check"}]
+        [{:regex => "status", :name => "status", :description => "Check the status of Zencoder.", :method => "check"}]
       end
 
       def self.description

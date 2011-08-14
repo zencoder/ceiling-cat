@@ -2,7 +2,7 @@ module CeilingCat
   module Plugin
     class Calc < CeilingCat::Plugin::Base      
       def self.commands
-        [{:regex => /^calculate/i, :name => "calculate", :description => "Performs basic math functions - 'calculate 7*5'", :method => "calculate"}]
+        [{:regex => "calculate", :name => "calculate", :description => "Performs basic math functions - '!calculate 7*5'", :method => "calculate"}]
       end
       
       def self.description

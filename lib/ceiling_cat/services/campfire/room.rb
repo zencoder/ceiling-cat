@@ -1,8 +1,7 @@
 module CeilingCat
   module Campfire
     class Room < CeilingCat::Room
-      attr_accessor :me
-      
+
       def initialize(opts={})
         super
         @campfire_room = @connection.campfire.find_room_by_name(opts[:room_name])
@@ -14,7 +13,7 @@ module CeilingCat
         begin
           loop do
             begin
-              Timeout::timeout(30) do
+              Timeout::timeout(60) do
                 @campfire_room.listen do |event|
                   begin
                     user = CeilingCat::User.new(event[:user][:name], :id => event[:user][:id], :role => event[:user][:type])
@@ -53,7 +52,7 @@ module CeilingCat
       end
       
       def me
-        @me ||= CeilingCat::User.new(@connection.campfire.me[:id], :id => @connection.campfire.me[:id], :role => @connection.campfire.me[:type])
+        @me ||= CeilingCat::User.new(@connection.campfire.me[:name], :id => @connection.campfire.me[:id], :role => @connection.campfire.me[:type])
       end
       
       def users_in_room(opts={})

@@ -1,39 +1,48 @@
 module CeilingCat
   class Room
-    attr_accessor :connection, :room, :users_in_room
-    
+    attr_accessor :connection, :room, :users_in_room, :me
+
     def initialize(opts={})
       @connection = opts[:connection]
     end
-    
+
     def watch
       raise NotImplementedError, "Implement in chat service files!"
     end
-    
+
     def say
       raise NotImplementedError, "Implement in chat service files!"
     end
+
+    def me
+      raise NotImplementedError, "Implement in chat service files or define config.nickname!" unless config.nickname
+      @me ||= CeilingCat::User.new(config.nickname)
+    end
     
+    def users_in_room(type=nil)
+      raise NotImplementedError, "Implement in chat service files!"
+    end
+
     def plugins
       @connection.plugins
     end
-    
+
     def config
       @connection.config
     end
-    
+
     def plugin_installed?(name)
       !plugin(name).nil?
     end
-    
+
     def plugin(name)
       plugins.find{|plugin| plugin.name.downcase == name.to_s.downcase || plugin.class == name}
     end
-    
+
     def store
       @connection.storage
     end
-    
+
     def plugin_descriptions(all=false)
       messages = []
       plugins.each do |plugin|
@@ -41,7 +50,7 @@ module CeilingCat
       end
       messages
     end
-    
+
     def available_commands
       messages = []
       plugins.each do |plugin|
@@ -54,11 +63,7 @@ module CeilingCat
       end
       messages
     end
-    
-    def users_in_room(type=nil)
-      raise NotImplementedError, "Implement in chat service files!"
-    end
-    
+
     def list_of_users_in_room(type=nil)
       users = users_in_room(type)
       last_user = users.pop

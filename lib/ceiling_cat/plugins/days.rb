@@ -4,8 +4,8 @@ module CeilingCat
   module Plugin
     class Days < CeilingCat::Plugin::Base
       def self.commands
-        [{:regex => /^!today/i, :name => "!today", :description => "Find out if there's anything special about today.", :method => "about"},
-         {:regex => /^!add holiday/i, :name => "!add holiday", :description => "Add a holiday - 'add holiday 1/19/2011'", :method => "add_to_holidays"}]
+        [{:regex => "today", :name => "today", :description => "Find out if there's anything special about today.", :method => "about"},
+         {:regex => "add holiday", :name => "add holiday", :description => "Add a holiday - '!add holiday 1/19/2011'", :method => "add_to_holidays"}]
       end
       
       def about(date=Date.today)

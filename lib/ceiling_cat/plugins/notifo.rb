@@ -13,7 +13,7 @@ module CeilingCat
       end
       
       def self.commands
-        [{:regex => /^!notifo/i, :name => "!notifo", :description => "Send a message with Notifo - '!notifo Hey, get in here!'.", :method => "deliver"}]
+        [{:regex => "notifo", :name => "notifo", :description => "Send a message with Notifo - '!notifo Hey, get in here!'.", :method => "deliver"}]
       end
       
       def deliver(message=nil)
