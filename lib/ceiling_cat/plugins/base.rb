@@ -3,8 +3,8 @@ module CeilingCat
     class Base
       attr_accessor :event
 
-      def initialize(the_event)
-        @event = the_event
+      def initialize(event)
+        @event = event
       end
 
       def handle
@@ -13,6 +13,7 @@ module CeilingCat
             self.send command[:method]
           rescue => e
             reply "There was an error: #{$!}"
+            raise e
           end
         end
       end
@@ -46,7 +47,11 @@ module CeilingCat
       end
       
       def store
-        room.store
+        self.class.store
+      end
+      
+      def self.store
+        CeilingCat::Setup.config.storage
       end
 
       def body
@@ -62,7 +67,7 @@ module CeilingCat
       end
 
       def body_without_command(command="")
-        body.sub(command,"")
+        body.sub(command,"").strip
       end
 
       def talking_to_me?

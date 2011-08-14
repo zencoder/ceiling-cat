@@ -76,9 +76,7 @@ module CeilingCat
       end
             
       def say(something_to_say)
-        something_to_say = [something_to_say] unless something_to_say.is_a?(Array)
-
-        something_to_say.each do |line|
+        Array(something_to_say).each do |line|
           @campfire_room.speak(line)
         end
       end

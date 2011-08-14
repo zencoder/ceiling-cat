@@ -17,8 +17,9 @@ module CeilingCat
               end
             else
               message << "Hey #{user.name}! Nobody from Zencoder is in Support Chat right now."
+              message << "Today is a holiday, so there aren't any Zencoder employees around." if room.plugin_installed?("days") && room.plugin("days").is_a_holiday?
               message << "There are usually Zencoder employees in chat during weekday business hours - 8am to 5pm Pacific."
-              message << "Feel free to enter any questions along with an email address where we can reach you, and a Zencoder employee will get back to you soon, usually towards the beginning of the next business day."
+              message << "Feel free to ask any questions you have along with an email address where we can reach you, and a Zencoder employee will get back to you soon, usually towards the beginning of the next business day."
               if guests.size > 1
                 message << "But be aware that other people currently in the room will be able to see anything you write, so don't leave any information you don't want public."
               end
