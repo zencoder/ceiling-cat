@@ -13,11 +13,11 @@ module CeilingCat
       end
       
       def self.commands
-        [{:regex => "notifo", :name => "notifo", :description => "Send a message with Notifo - '!notifo Hey, get in here!'.", :method => "deliver"}]
+        [{:command => "notifo", :description => "Send a message with Notifo - '!notifo Hey, get in here!'.", :method => "deliver"}]
       end
       
       def deliver(message=nil)
-        message ||= body_without_command(commands.first[:regex])
+        message ||= body_without_nick_or_command("notifo")
         if active?
           @users.each do |user|
             HTTParty.post("https://api.notifo.com/v1/send_notification",

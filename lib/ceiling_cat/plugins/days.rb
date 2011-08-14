@@ -4,8 +4,8 @@ module CeilingCat
   module Plugin
     class Days < CeilingCat::Plugin::Base
       def self.commands
-        [{:regex => "today", :name => "today", :description => "Find out if there's anything special about today.", :method => "about"},
-         {:regex => "add holiday", :name => "add holiday", :description => "Add a holiday - '!add holiday 1/19/2011'", :method => "add_to_holidays"}]
+        [{:command => "today", :description => "Find out if there's anything special about today.", :method => "about"},
+         {:command => "add holiday", :description => "Add a holiday - '!add holiday 1/19/2011'", :method => "add_to_holidays"}]
       end
       
       def about(date=Date.today)
@@ -27,12 +27,12 @@ module CeilingCat
       end
       
       def add_to_holidays
-        date = body_without_command(/^!add holiday/)
+        date = body_without_command("add holiday")
         if date.empty?
           reply "You need to provide a date to add to the holiday list, like 'add holiday 1/19/2011'"
         else
           begin
-            self.class.add_to_holidays(body_without_command(/^!add holiday/))
+            self.class.add_to_holidays(body_without_command("add holiday"))
             reply "#{date.to_s} has been added to the holiday list."
           rescue NotADateError
             reply "Sorry, that's not a valid date."

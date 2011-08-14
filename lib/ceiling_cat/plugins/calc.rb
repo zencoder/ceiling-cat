@@ -2,7 +2,7 @@ module CeilingCat
   module Plugin
     class Calc < CeilingCat::Plugin::Base      
       def self.commands
-        [{:regex => "calculate", :name => "calculate", :description => "Performs basic math functions - '!calculate 7*5'", :method => "calculate"}]
+        [{:command => "calculate", :description => "Performs basic math functions - '!calculate 7*5'", :method => "calculate"}]
       end
       
       def self.description
@@ -19,7 +19,7 @@ module CeilingCat
       
       def calculate
         begin
-          math = body_without_command(commands.first[:regex]).gsub(/[^\d+-\/*\(\)\.]/,"")
+          math = body.gsub(/[^\d+-\/*\(\)\.]/,"") # Removing anything but numbers, operators, and parens
           if math.length > 0 && math =~ /^\d.+\d$/
             reply "#{math} = #{eval math}"
           else

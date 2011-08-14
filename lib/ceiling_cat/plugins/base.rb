@@ -8,7 +8,7 @@ module CeilingCat
       end
 
       def handle
-        if command = commands.find{|command| body =~ /^(!|#{room.me.name}:?\s*)#{command[:regex]}/i}
+        if command = commands.find{|command| body =~ /^(!|#{room.me.name}:?\s*)#{command[:command]}/i}
           begin
             self.send command[:method]
           rescue => e
@@ -65,21 +65,21 @@ module CeilingCat
       def reply(message)
         room.say(message)
       end
-
-      def body_without_command(command="")
-        body.sub(command,"").strip
-      end
-
-      def talking_to_me?
-        body =~ /(^|\s)#{room.me.name}(\s|$)/i
-      end
-
+      
       def words
         body.split
       end
 
-      def body_without_nick
-        body.sub(room.me.name,'')
+      def body_without_command(command,text=body)
+        text.sub(/^!#{command}:?\s*/i,"").strip
+      end
+
+      def body_without_nick(text=body)
+        text.sub(/^#{room.me.name}:?\s*/i,'').strip
+      end
+      
+      def body_without_nick_or_command(command,text=body)
+        body_without_command(command, body_without_nick(text).sub(/^#{command}/i,"!#{command}"))
       end
       
       def pluralize(n, singular, plural=nil)

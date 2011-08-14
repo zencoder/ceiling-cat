@@ -2,9 +2,9 @@ module CeilingCat
   module Plugin
     class About < CeilingCat::Plugin::Base
       def self.commands
-        [{:regex => "plugins", :name => "plugins", :description => "List of installed plugins.", :method => "list_plugins"},
-         {:regex => "commands", :name => "commands", :description => "List of available commands.", :method => "list_commands"},
-         {:regex => "employees", :name => "employees", :description => "List of employees in the room.", :method => "list_employees"}]
+        [{:command => "plugins", :description => "List of installed plugins.", :method => "list_plugins"},
+         {:command => "commands", :description => "List of available commands.", :method => "list_commands"},
+         {:command => "employees", :description => "List of employees in the room.", :method => "list_employees"}]
       end
 
       def self.description

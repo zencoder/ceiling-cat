@@ -3,9 +3,9 @@ require 'crack'
 
 module CeilingCat
   module Plugin
-    class ZencoderStatus < CeilingCat::Plugin::Base      
+    class ZencoderStatus < CeilingCat::Plugin::Base
       def self.commands
-        [{:regex => "status", :name => "status", :description => "Check the status of Zencoder.", :method => "check"}]
+        [{:command => "status", :description => "Check the status of Zencoder.", :method => "check"}]
       end
 
       def self.description
