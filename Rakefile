@@ -9,7 +9,7 @@ namespace :plugin do
       contents = plugin_base(name)
       File.open(file, 'w') {|f| f.write(contents) }
       puts "Plugin '#{name}' created at #{file}."
-      puts "Make sure you require it in your Chatfile and add it to your plugins so it runs."
+      puts "Make sure you require it in your Chatfile and add it to your config.plugins so it runs."
     else
       puts "A plugin named '#{name}' already exists. Try another name."
     end
@@ -34,7 +34,7 @@ def plugin_base(name)
       # If you want the plugin to run when certain text is sent use commands instead of handle.
       # Ceiling Cat will watch for "![command]" or "[name]: [command" and execute the method for that command.
       def self.commands
-        [{:command => "#{name}", :description => "Does something", :method => "#{name}"}]
+        [{:command => "#{name}", :description => "Does something", :method => "#{name}", :public => false}]
       end
 
       def self.description
@@ -42,7 +42,7 @@ def plugin_base(name)
       end
 
       def self.name
-        "#{name.capitalize}"
+        "#{name.gsub("_"," ").capitalize}"
       end
 
       def self.public?

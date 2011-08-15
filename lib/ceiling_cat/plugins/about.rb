@@ -3,8 +3,8 @@ module CeilingCat
     class About < CeilingCat::Plugin::Base
       def self.commands
         [{:command => "plugins", :description => "List of installed plugins.", :method => "list_plugins"},
-         {:command => "commands", :description => "List of available commands.", :method => "list_commands"},
-         {:command => "employees", :description => "List of employees in the room.", :method => "list_employees"}]
+         {:command => "commands", :description => "List of available commands.", :method => "list_commands", :public => true},
+         {:command => "employees", :description => "List of employees in the room.", :method => "list_employees", :public => true}]
       end
 
       def self.description
@@ -20,11 +20,11 @@ module CeilingCat
       end
 
       def list_plugins
-        reply room.plugin_descriptions
+        reply room.plugin_descriptions(user.is_registered?)
       end
 
       def list_commands
-        messages = room.available_commands
+        messages = room.available_commands(user.is_registered?) # Show all commands if the user is registered, otherwise only show private commands
         messages << "Run commands with '![command]' or '#{room.me.name}: [command]'"
         reply messages
       end

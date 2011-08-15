@@ -13,7 +13,7 @@ module CeilingCat
         begin
           loop do
             begin
-              Timeout::timeout(60) do
+              Timeout::timeout(90) do
                 @campfire_room.listen do |event|
                   begin
                     user = CeilingCat::User.new(event[:user][:name], :id => event[:user][:id], :role => event[:user][:type])
@@ -24,11 +24,16 @@ module CeilingCat
                     end
                   rescue => e
                     say "An error occurred with Campfire: #{e}"
+                    if e.message =~ /undefined method/
+                      debugger
+                    end
                     raise e
                   end
                 end
               end
             rescue Timeout::Error
+              puts "timeout! trying again..."
+              retry
             end
           end
         rescue ReloadException => e

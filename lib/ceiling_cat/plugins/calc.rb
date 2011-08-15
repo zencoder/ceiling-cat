@@ -2,7 +2,7 @@ module CeilingCat
   module Plugin
     class Calc < CeilingCat::Plugin::Base      
       def self.commands
-        [{:command => "calculate", :description => "Performs basic math functions - '!calculate 7*5'", :method => "calculate"}]
+        [{:command => "calculate", :description => "Performs basic math functions - '!calculate 7*5'", :method => "calculate", :public => true}]
       end
       
       def self.description

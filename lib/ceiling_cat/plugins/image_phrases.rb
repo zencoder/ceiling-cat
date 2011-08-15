@@ -30,11 +30,11 @@ module CeilingCat
       end
 
       def self.description
-        "Watches for certain phrases and inserts relative images"
+        "Watches for certain phrases and inserts a relevant image"
       end
 
       def self.name
-        "Funny_images"
+        "Image Phrases"
       end
 
       def self.public?

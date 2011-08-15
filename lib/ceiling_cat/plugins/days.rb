@@ -4,7 +4,7 @@ module CeilingCat
   module Plugin
     class Days < CeilingCat::Plugin::Base
       def self.commands
-        [{:command => "today", :description => "Find out if there's anything special about today.", :method => "about"},
+        [{:command => "today", :description => "Find out if there's anything special about today.", :method => "about", :public => true},
          {:command => "add holiday", :description => "Add a holiday - '!add holiday 1/19/2011'", :method => "add_to_holidays"}]
       end
       

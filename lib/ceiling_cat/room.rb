@@ -43,21 +43,21 @@ module CeilingCat
       @connection.storage
     end
 
-    def plugin_descriptions(all=false)
+    def plugin_descriptions(show_private=false)
       messages = []
       plugins.each do |plugin|
-        messages << "#{plugin.name}: #{plugin.description}" if all || plugin.public?
+        messages << "#{plugin.name}: #{plugin.description}" if show_private || plugin.public?
       end
       messages
     end
 
-    def available_commands
+    def available_commands(show_private=false)
       messages = []
       plugins.each do |plugin|
-        if !plugin.commands.empty? && plugin.public?
+        if !plugin.commands.empty? && (plugin.public? || show_private)
           messages << "Commands for #{plugin.name}"
           plugin.commands.each do |command|
-            messages << "-- #{command[:name]}: #{command[:description]}"
+            messages << "-- #{command[:command]}: #{command[:description]}" if show_private || command[:public]
           end
         end
       end

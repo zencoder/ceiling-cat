@@ -5,7 +5,7 @@ module CeilingCat
   module Plugin
     class ZencoderStatus < CeilingCat::Plugin::Base
       def self.commands
-        [{:command => "status", :description => "Check the status of Zencoder.", :method => "check"}]
+        [{:command => "status", :description => "Check the status of Zencoder.", :method => "check", :public => true}]
       end
 
       def self.description

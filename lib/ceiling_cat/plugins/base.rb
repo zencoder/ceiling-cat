@@ -10,7 +10,9 @@ module CeilingCat
       def handle
         if command = commands.find{|command| body =~ /^(!|#{room.me.name}:?\s*)#{command[:command]}/i}
           begin
-            self.send command[:method]
+            if command[:public] || user.is_registered?
+              self.send command[:method]
+            end
           rescue => e
             reply "There was an error: #{$!}"
             raise e
@@ -19,7 +21,7 @@ module CeilingCat
       end
 
       def self.name
-        self.class.to_s.gsub("CeilingCat::Plugin::","")
+        self.to_s.gsub("CeilingCat::Plugin::","")
       end
 
       def self.description

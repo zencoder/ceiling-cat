@@ -7,7 +7,7 @@ module CeilingCat
         @config=config
         @config.ssl ||= "true"
       end
-      
+
       def campfire
         @campfire = Tinder::Campfire.new(self.config.username, :token => self.config.token, :ssl => self.config.ssl)
       end
