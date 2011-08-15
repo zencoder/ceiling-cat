@@ -75,7 +75,6 @@ module CeilingCat
       def self.remove(phrase)
         store["image_phrases"] ||= []
         store["image_phrases"] = store["image_phrases"].reject{|ip| ip[:phrase].downcase == phrase.downcase }
-        # store["image_phrases"].collect{|ip| ip[:phrase]}
       end
     end
   end

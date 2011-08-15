@@ -16,11 +16,14 @@ module CeilingCat
               Timeout::timeout(90) do
                 @campfire_room.listen do |event|
                   begin
-                    user = CeilingCat::User.new(event[:user][:name], :id => event[:user][:id], :role => event[:user][:type])
-                    unless is_me?(user) # Otherwise CC will talk to itself
-                      event = CeilingCat::Campfire::Event.new(self,event[:body], user, :type => event[:type])
-                      event.handle
-                      users_in_room(:reload => true) if event.type != :chat # If someone comes or goes, reload the list.
+                    if event[:type] != "TimestampMessage"
+                      user = CeilingCat::User.new(event[:user][:name], :id => event[:user][:id], :role => event[:user][:type])
+                    
+                      unless is_me?(user) # Otherwise CC will talk to itself
+                        event = CeilingCat::Campfire::Event.new(self,event[:body], user, :type => event[:type])
+                        event.handle
+                        users_in_room(:reload => true) if event.type != :chat # If someone comes or goes, reload the list.
+                      end
                     end
                   rescue => e
                     say "An error occurred with Campfire: #{e}"
