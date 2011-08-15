@@ -4,7 +4,7 @@ module CeilingCat
 
     def initialize(room, body,user,opts={})
       @room = room
-      @body = body
+      @body = body.strip
       @user = user
       @type = opts[:type]
       @time = opts[:time] || Time.now

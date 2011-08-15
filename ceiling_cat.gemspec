@@ -16,6 +16,7 @@ plugins = ["lib/ceiling_cat/plugins/base.rb",
            "lib/ceiling_cat/plugins/about.rb",
            "lib/ceiling_cat/plugins/calc.rb",
            "lib/ceiling_cat/plugins/days.rb",
+           "lib/ceiling_cat/plugins/image_phrases.rb",
            "lib/ceiling_cat/plugins/greeter.rb",
            "lib/ceiling_cat/plugins/notifo.rb",
            "lib/ceiling_cat/plugins/zencoder_status.rb"]
