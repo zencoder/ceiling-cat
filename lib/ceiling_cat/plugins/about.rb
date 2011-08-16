@@ -4,7 +4,7 @@ module CeilingCat
       def self.commands
         [{:command => "plugins", :description => "List of installed plugins.", :method => "list_plugins"},
          {:command => "commands", :description => "List of available commands.", :method => "list_commands", :public => true},
-         {:command => "employees", :description => "List of employees in the room.", :method => "list_employees", :public => true}]
+         {:command => "employees", :description => "List of employees in the room.", :method => "list_employees", :public => true},]
       end
 
       def self.description

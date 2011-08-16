@@ -10,7 +10,7 @@ module CeilingCat
           if user.is_guest?
             if !members.empty?
               message << "Hey #{user.name}! Welcome to Zencoder Support Chat."
-              if store["currently_away"].to_s == "false"
+              if store["currently_away"].to_s == "true"
                 message << "#{room.list_of_users_in_room(:type => "member")} #{pluralize(members.size, "is", "are")} Zencoder employees who can help you out, but currently #{pluralize(members.size, "he is", "they are")} away."
                 message << "I'll see if I can get someone here to help you out. If nobody shows up in a few minutes you can also email help@zencoder.com."
                 room.plugin("notifo").new(@event).deliver("#{user.name} has logged in to chat.") if room.plugin_installed?("notifo")

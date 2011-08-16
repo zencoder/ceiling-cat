@@ -3,7 +3,8 @@ require 'bundler/gem_tasks'
 namespace :plugin do
   desc "Create a new plugin"
   task :create do
-    name = (ENV["name"] || "new_plugin").downcase
+    raise "You need to set a name! `rake plugin:create name=[name]`" unless ENV["name"]
+    name = (ENV["name"]).downcase
     file = File.join("lib", "ceiling_cat", "plugins", "#{name}.rb")
     unless File.exists? file
       contents = plugin_base(name)
