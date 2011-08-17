@@ -44,7 +44,7 @@ module CeilingCat
     end
 
     def debug_mode?
-      if !store["debug_mode"].nil? && store["debug_mode"] == "true"
+      !store["debug_mode"].nil? && store["debug_mode"] == "true"
     end
 
     def plugin_descriptions(show_private=false)

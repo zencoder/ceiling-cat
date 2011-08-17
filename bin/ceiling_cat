@@ -2,6 +2,11 @@
 require 'rubygems'
 require 'ceiling_cat'
 
-load ARGV[0] || './Chatfile'
+file = ARGV[0] || './Chatfile'
 
-CeilingCat::Setup.new.connect
+if File.exists?(file)
+  load file
+  CeilingCat::Setup.new.connect
+else
+  puts "Couldn't find a Chatfile at #{file}! Create one at `./Chatfile` or provide a path to one."
+end

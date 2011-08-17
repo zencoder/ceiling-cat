@@ -43,9 +43,9 @@ Gem::Specification.new do |s|
 
   s.rubyforge_project = "ceiling_cat"
   
-  s.add_dependency "tinder"
-  s.add_dependency "httparty"
-  s.add_dependency "crack"
+  s.add_dependency "tinder", "1.4.4"
+  s.add_dependency "httparty", "0.7.8"
+  s.add_dependency "crack", "0.1.8"
 
   s.files         = base + plugins + storage + campfire
   s.test_files    = []
