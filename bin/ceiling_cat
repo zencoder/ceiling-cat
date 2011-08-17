@@ -2,11 +2,20 @@
 require 'rubygems'
 require 'ceiling_cat'
 
-file = ARGV[0] || './Chatfile'
-
-if File.exists?(file)
-  load file
-  CeilingCat::Setup.new.connect
+if ARGV[0] == "setup"
+   cc=`gem which ceiling_cat`
+  `mkdir ./plugins`
+  `cp #{File.join(cc.split("/")[0..-3], "setup", "Rakefile")} Rakefile`
+  `cp #{File.join(cc.split("/")[0..-3], "setup", "Chatfile")} Rakefile`
+  puts "Chatfile and Rakefile have been created."
+  puts "To create your own plugin, run `rake plugin:create name=[plugin_name]` to get started."
 else
-  puts "Couldn't find a Chatfile at #{file}! Create one at `./Chatfile` or provide a path to one."
+  file = ARGV[0] || './Chatfile'
+
+  if File.exists?(file)
+    load file
+    CeilingCat::Setup.new.connect
+  else
+    puts "Couldn't find a Chatfile at #{file}! Create one at `./Chatfile`, provide a path to one, or run `ceiling_cat setup`"
+  end
 end

@@ -1,6 +1,5 @@
 require 'bundler/gem_tasks'
 
-namespace :gem do
   namespace :plugin do
     desc "Create a new plugin"
     task :create do
@@ -8,7 +7,7 @@ namespace :gem do
       debugger
       raise "You need to set a name! `rake plugin:create name=[plugin_name]`" unless ENV["name"]
       name = ENV["name"].downcase
-      file = File.join("lib", "ceiling_cat", "plugins", "#{name}.rb")
+      file = File.join("plugins", "#{name}.rb")
 
       unless File.exists? file
         contents = plugin_base(name)
@@ -22,7 +21,7 @@ namespace :gem do
   end
 
   def plugin_base(name)
-  %Q{module CeilingCat
+%Q{module CeilingCat
   module Plugin
     class #{name.camelize} < CeilingCat::Plugin::Base
       # See lib/ceiling_cat/plugins/base.rb for the methods available by default.
@@ -61,7 +60,6 @@ namespace :gem do
   end
 end
 }
-  end
 end
 
 class String

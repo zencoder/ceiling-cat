@@ -5,7 +5,7 @@ require 'ceiling_cat/plugins/greeter'
 
 CeilingCat::Setup.configure do |config|
   config.service = 'campfire'
-  config.username = 'zencoder'
+  config.username = 'username'
   config.token = '12345abcde'
   config.room = 'Test Room'
   config.ssl = true
