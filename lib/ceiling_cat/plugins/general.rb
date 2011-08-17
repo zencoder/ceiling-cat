@@ -33,7 +33,7 @@ module CeilingCat
       end
 
       def run_debug
-        if !store["debug_mode"].nil? && store["debug_mode"] == "true"
+        if room.debug_mode?
           reply "Opening debugger in terminal"
           debugger
         else

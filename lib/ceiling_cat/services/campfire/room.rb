@@ -26,10 +26,7 @@ module CeilingCat
                       end
                     end
                   rescue => e
-                    say "An error occurred with Campfire: #{e}"
-                    if e.message =~ /undefined method/
-                      debugger if store["debug_mode"].nil? && store["debug_mode"] == "true"
-                    end
+                    say "An error occurred with Campfire: #{e}" if debug_mode?
                     raise e
                   end
                 end
@@ -48,7 +45,7 @@ module CeilingCat
           end
           retry
         rescue StandardError => e
-          debugger
+          debugger if debug_mode?
           e.backtrace.each do |line|
             puts "Backtrace: #{line}"
           end
