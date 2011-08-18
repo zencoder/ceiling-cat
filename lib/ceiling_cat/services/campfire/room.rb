@@ -13,7 +13,7 @@ module CeilingCat
         begin
           loop do
             begin
-              Timeout::timeout(90) do
+              Timeout::timeout(60) do
                 @campfire_room.listen do |event|
                   begin
                     if event[:type] != "TimestampMessage"
