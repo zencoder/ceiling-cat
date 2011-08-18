@@ -16,11 +16,11 @@ How do I work this thing?
 ------------
 Create a directory where your Ceiling Cat can live.
 
-Install the gem. You can use bundler
+Install the gem. You can use bundler and a Gemfile:
 
     gem 'ceiling_cat'
 
-or you can install it from the command line
+or you can install it from the command line:
 
     $ gem install ceiling_cat
   
