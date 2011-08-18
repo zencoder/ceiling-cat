@@ -36,6 +36,9 @@ module CeilingCat
               retry
             end
           end
+        rescue Faraday::Error::ParsingError
+          puts "Error parsing response. Campfire may be down."
+          break
         rescue ReloadException => e
           retry
         rescue NoMethodError => e
@@ -45,6 +48,7 @@ module CeilingCat
           end
           retry
         rescue StandardError => e
+          puts e.class
           debugger if debug_mode?
           e.backtrace.each do |line|
             puts "Backtrace: #{line}"
