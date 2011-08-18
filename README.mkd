@@ -63,6 +63,12 @@ A calculator. Believe it.
 
 Have Ceiling Cat watch for phrases and respond when it sees it.
 
+Add a response by default in you Chatfile
+
+    CeilingCat::Plugin::CallAndResponse.add(
+        :call => "what's the deal",
+        :response => http://www.seinfeldscripts.com/images/seinfeld1.jpg)
+
 ### Campfire Account Monitor ###
 
 Campfire plans have a limit on how many simultaneous connections can be made. Set your plans limit and Ceiling Cat will check if you're close to the limit when someone joins the chat room it's in.
@@ -70,6 +76,10 @@ Campfire plans have a limit on how many simultaneous connections can be made. Se
 ### Days ###
 
 Check if the day is a weekend or a holiday. Holidays are set through chat or in your Chatfile.
+
+Add some holidays in your Chatfile
+
+    CeilingCat::Plugin::Days.add_to_holidays(%w{ 2011-01-17 2011-02-21 })
 
 ### General ###
 
@@ -82,6 +92,11 @@ Say hello to registered users and guests when they enter. At Zencoder we use thi
 ### Notifo ###
 
 Send messages out using Notifo. Set it up in your chatfile. At Zencoder we use this to notify us if no employees are in the room and a guest comes in.
+
+Set up Notifo in your Chatfile
+
+    CeilingCat::Plugin::Notifo.set_credentials('service_name','api_secret')
+    CeilingCat::Plugin::Notifo.add_users(%w{ notifo_account })
 
 Can I make my own plugins?
 ------------

@@ -23,9 +23,7 @@ plugins = ["lib/ceiling_cat/plugins/base.rb",
            "lib/ceiling_cat/plugins/days.rb",
            "lib/ceiling_cat/plugins/general.rb",
            "lib/ceiling_cat/plugins/greeter.rb",
-           "lib/ceiling_cat/plugins/metrics.rb",
-           "lib/ceiling_cat/plugins/notifo.rb",
-           "lib/ceiling_cat/plugins/zencoder_status.rb"]
+           "lib/ceiling_cat/plugins/notifo.rb",]
 
 storage = ["lib/ceiling_cat/storage/base.rb",
            "lib/ceiling_cat/storage/yaml.rb"]
