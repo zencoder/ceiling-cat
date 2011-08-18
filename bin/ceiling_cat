@@ -4,10 +4,15 @@ require 'ceiling_cat'
 
 if ARGV[0] == "setup"
    cc=`gem which ceiling_cat`
-  `mkdir ./plugins`
-  `cp #{File.join(cc.split("/")[0..-3], "setup", "Rakefile")} Rakefile`
-  `cp #{File.join(cc.split("/")[0..-3], "setup", "Chatfile")} Rakefile`
-  puts "Chatfile and Rakefile have been created."
+  `mkdir ./plugins` unless File.exists?('./plugins')
+  if File.exists?(File.join(cc.split("/")[0..-3], "setup", "Rakefile")) && !File.exists?('Rakefile')
+    `cp #{File.join(cc.split("/")[0..-3], "setup", "Rakefile")} Rakefile`
+    puts "Rakefile created."
+  end
+  if File.exists?(File.join(cc.split("/")[0..-3], "setup", "Chatfile"))
+    `cp #{File.join(cc.split("/")[0..-3], "setup", "Chatfile")} Chatfile` unless File.exists?('Chatfile')
+    puts "Chatfile created."
+  end
   puts "To create your own plugin, run `rake plugin:create name=[plugin_name]` to get started."
 else
   file = ARGV[0] || './Chatfile'

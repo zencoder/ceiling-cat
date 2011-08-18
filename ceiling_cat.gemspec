@@ -59,7 +59,7 @@ eos
   s.add_dependency "httparty", "0.7.8"
   s.add_dependency "crack", "0.1.8"
 
-  s.files         = base + plugins + storage + campfire
+  s.files         = base + setup + plugins + storage + campfire
   s.test_files    = []
   s.executables   = ["ceiling_cat"]
   s.require_paths = ["lib"]
