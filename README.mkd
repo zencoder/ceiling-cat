@@ -1,6 +1,6 @@
 Ceiling Cat
 ====================
-Is watching you chat. A plugin powered chat bot compatible with multiple chat services, including Campfire.
+Is watching you chat. A plugin powered chat bot compatible with Campfire, with more services coming soon.
 
 Installation
 ------------
@@ -14,6 +14,34 @@ Ceiling Cat started as a project at Zencoder to monitor our support chat in Camp
 
 How do I work this thing?
 ------------
-  $ ceiling_cat
+Create a directory where your Ceiling Cat can live.
 
-Ceiling Cat will look for a Chatfile containing information about what service to use, what plugins to use, and any other configuration details. Check out an example Chatfile in the examples directory.
+Install the gem. You can use bundler
+
+    gem 'ceiling_cat'
+
+or you can install it from the command line
+
+    $ gem install ceiling_cat
+  
+Once that's installed you'll see some directions on getting started.
+
+In your ceiling_cat directory run
+
+    $ ceiling_cat setup
+  
+to create the basic structure. This will copy a Chatfile and Rakefile over for you, and create a plugins folder.
+
+Edit your Chatfile with your Campfire credentials (more services coming soon) and then run
+
+    $ ceiling_cat
+  
+and Ceiling Cat will start watching the room you specified.
+
+What about Plugins?
+------------
+Ceiling Cat comes with several plugins for you to use right away, but you can also create your own. Just run
+
+    $ rake plugin:create name=plugin_name
+  
+where plugin_name is the name of your plugin, and the skeleton of a plugin will be created in the plugins folder. Require it in your Chatfile, add it to the plugins array in CeilingCat::Setup, and Ceiling Cat will start using your plugin while it watches you chat.

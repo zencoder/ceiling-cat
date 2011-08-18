@@ -9,8 +9,8 @@ if ARGV[0] == "setup"
     `cp #{File.join(cc.split("/")[0..-3], "setup", "Rakefile")} Rakefile`
     puts "Rakefile created."
   end
-  if File.exists?(File.join(cc.split("/")[0..-3], "setup", "Chatfile"))
-    `cp #{File.join(cc.split("/")[0..-3], "setup", "Chatfile")} Chatfile` unless File.exists?('Chatfile')
+  if File.exists?(File.join(cc.split("/")[0..-3], "setup", "Chatfile")) && !File.exists?('Chatfile')
+    `cp #{File.join(cc.split("/")[0..-3], "setup", "Chatfile")} Chatfile`
     puts "Chatfile created."
   end
   puts "To create your own plugin, run `rake plugin:create name=[plugin_name]` to get started."
