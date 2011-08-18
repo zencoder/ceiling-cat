@@ -4,7 +4,6 @@ module CeilingCat
       def handle
         if event.type == :chat
           super
-          debugger
           if match = self.class.list.find{|car| body =~ Regexp.new(Regexp.escape(car[:call]),true) }
             reply match[:response]
             return nil
