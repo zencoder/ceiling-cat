@@ -41,22 +41,23 @@ Gem::Specification.new do |s|
   s.homepage    = "http://zencoder.com"
   s.summary     = %q{Ceiling Cat is watching you chat. A Campfire chat bot.}
   s.description = %q{Ceiling Cat is watching you chat. A Campfire chat bot!}
-  
+
   s.post_install_message = <<eos
   ********************************************************************************
     Run `ceiling_cat setup` to create a Chatfile and a Rakefile - everything you
     need to start watching your chats and making ceiling_cat do your bidding!
-  
-    Run `rake plugin:create name=plugin_name` to generate a new plugin.
 
     Update your Chatfile with your credentials and you'll be ready to go!
+
+    Want Ceiling Cat to do something special just for you?
+    Run `rake plugin:create name=plugin_name` to generate a new plugin.
   ********************************************************************************
 eos
-  
+
   s.add_dependency "tinder"
   s.add_dependency "httparty"
   s.add_dependency "crack"
-  
+
   s.add_development_dependency "rspec"
   s.add_development_dependency "autotest"
 
