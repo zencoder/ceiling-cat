@@ -12,6 +12,9 @@ base = ["lib/ceiling_cat.rb",
         "lib/ceiling_cat/room.rb",
         "lib/ceiling_cat/storage/base.rb" ]
 
+setup = ["setup/Chatfile",
+         "setup/Rakefile"]
+
 plugins = ["lib/ceiling_cat/plugins/base.rb",
            "lib/ceiling_cat/plugins/about.rb",
            "lib/ceiling_cat/plugins/calc.rb",
@@ -20,13 +23,11 @@ plugins = ["lib/ceiling_cat/plugins/base.rb",
            "lib/ceiling_cat/plugins/days.rb",
            "lib/ceiling_cat/plugins/general.rb",
            "lib/ceiling_cat/plugins/greeter.rb",
-           "lib/ceiling_cat/plugins/metrics.rb",
-           "lib/ceiling_cat/plugins/notifo.rb",
-           "lib/ceiling_cat/plugins/zencoder_status.rb"]
-           
+           "lib/ceiling_cat/plugins/notifo.rb",]
+
 storage = ["lib/ceiling_cat/storage/base.rb",
            "lib/ceiling_cat/storage/yaml.rb"]
- 
+
 campfire = ["lib/ceiling_cat/services/campfire.rb",
             "lib/ceiling_cat/services/campfire/connection.rb",
             "lib/ceiling_cat/services/campfire/event.rb",
@@ -40,8 +41,17 @@ Gem::Specification.new do |s|
   s.homepage    = "http://zencoder.com"
   s.summary     = %q{Ceiling Cat is watching you chat. A Campfire chat bot.}
   s.description = %q{Ceiling Cat is watching you chat. A Campfire chat bot!}
+  
+  s.post_install_message = <<eos
+  ********************************************************************************
+    Run `ceiling_cat setup` to create a Chatfile and a Rakefile - everything you
+    need to start watching your chats and making ceiling_cat do your bidding!
+  
+    Run `rake plugin:create name=plugin_name` to generate a new plugin.
 
-  s.rubyforge_project = "ceiling_cat"
+    Update your Chatfile with your credentials and you'll be ready to go!
+  ********************************************************************************
+eos
   
   s.add_dependency "tinder"
   s.add_dependency "httparty"
@@ -50,7 +60,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency "rspec"
   s.add_development_dependency "autotest"
 
-  s.files         = base + plugins + storage + campfire
+  s.files         = base + setup + plugins + storage + campfire
   s.test_files    = []
   s.executables   = ["ceiling_cat"]
   s.require_paths = ["lib"]

@@ -18,7 +18,7 @@ module CeilingCat
       raise NotImplementedError, "Implement in chat service files or define config.nickname!" unless config.nickname
       @me ||= CeilingCat::User.new(config.nickname)
     end
-    
+
     def users_in_room(type=nil)
       raise NotImplementedError, "Implement in chat service files!"
     end
@@ -41,6 +41,10 @@ module CeilingCat
 
     def store
       @connection.storage
+    end
+
+    def debug_mode?
+      !store["debug_mode"].nil? && store["debug_mode"] == "true"
     end
 
     def plugin_descriptions(show_private=false)

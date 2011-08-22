@@ -1,28 +1,23 @@
-require 'bundler/gem_tasks'
+namespace :plugin do
+  desc "Create a new plugin"
+  task :create do
+    raise "You need to set a name! `rake plugin:create name=[plugin_name]`" unless ENV["name"]
+    name = ENV["name"].downcase
+    file = File.join("plugins", "#{name}.rb")
 
-namespace :gem do
-  namespace :plugin do
-    desc "Create a new plugin"
-    task :create do
-      require 'ruby-debug'
-      debugger
-      raise "You need to set a name! `rake plugin:create name=[plugin_name]`" unless ENV["name"]
-      name = ENV["name"].downcase
-      file = File.join("lib", "ceiling_cat", "plugins", "#{name}.rb")
-
-      unless File.exists? file
-        contents = plugin_base(name)
-        File.open(file, 'w') {|f| f.write(contents) }
-        puts "Plugin '#{name}' created at #{file}."
-        puts "Make sure you require it in your Chatfile and add it to your config.plugins so it runs."
-      else
-        puts "A plugin named '#{name}' already exists. Try another name."
-      end
+    unless File.exists? file
+      contents = plugin_base(name)
+      File.open(file, 'w') {|f| f.write(contents) }
+      puts "Plugin '#{name}' created at #{file}."
+      puts "Make sure you require it in your Chatfile and add it to your config.plugins so it runs."
+    else
+      puts "A plugin named '#{name}' already exists. Try another name."
     end
   end
+end
 
-  def plugin_base(name)
-  %Q{module CeilingCat
+def plugin_base(name)
+%Q{module CeilingCat
   module Plugin
     class #{name.camelize} < CeilingCat::Plugin::Base
       # See lib/ceiling_cat/plugins/base.rb for the methods available by default.
@@ -61,7 +56,6 @@ namespace :gem do
   end
 end
 }
-  end
 end
 
 class String

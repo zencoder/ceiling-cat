@@ -12,7 +12,7 @@ module CeilingCat
         if room.connection.config.service.downcase == "campfire" && event.type == :entrance
           user_count = room.connection.total_user_count
           max_users = room.connection.config.max_users || 100
-          room.plugin("notifo").new(@event).deliver("#{user_count} of #{max_users} logged in to Campfire.") if room.plugin_installed?("notifo") && user_count > max_users-2
+          room.plugin("notifo").new(@event).deliver("#{user_count} of #{max_users} max  connections to Campfire.") if room.plugin_installed?("notifo") && user_count > max_users-2
         end
         super
       end
@@ -24,7 +24,7 @@ module CeilingCat
       end
 
       def self.description
-        "A plugin called Campfire_account_monitor"
+        "For monitoring Campfire connection limits"
       end
 
       def self.name
@@ -37,7 +37,7 @@ module CeilingCat
 
       def total_users
         if room.connection.config.service.downcase == "campfire"
-          reply "#{room.connection.total_user_count} user slots currently used"
+          reply "#{room.connection.total_user_count} connections currently used"
         end
       end
     end

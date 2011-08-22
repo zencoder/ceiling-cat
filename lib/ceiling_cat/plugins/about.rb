@@ -4,7 +4,8 @@ module CeilingCat
       def self.commands
         [{:command => "plugins", :description => "List of installed plugins.", :method => "list_plugins"},
          {:command => "commands", :description => "List of available commands.", :method => "list_commands", :public => true},
-         {:command => "employees", :description => "List of employees in the room.", :method => "list_employees", :public => true},]
+         {:command => "users", :description => "List of registered in the room.", :method => "list_users", :public => true},
+         {:command => "guests", :description => "List of guests in the room.", :method => "list_guests", :public => true}]
       end
 
       def self.description
@@ -29,9 +30,14 @@ module CeilingCat
         reply messages
       end
       
-      def list_employees
+      def list_users
         members = room.list_of_users_in_room(:type => "member")
-        reply "#{members} #{pluralize(members.size, "is a", "are")} Zencoder #{pluralize(members.size, "employee")}."
+        reply "#{members} #{pluralize(members.size, "is a", "are")} #{pluralize(members.size, "registered user")}."
+      end
+      
+      def list_guests
+        guests = room.list_of_users_in_room(:type => "guest")
+        reply "#{guests} #{pluralize(members.size, "is a", "are")} #{pluralize(members.size, "guest")}."
       end
     end
   end

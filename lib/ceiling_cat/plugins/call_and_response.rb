@@ -5,7 +5,7 @@ module CeilingCat
         if event.type == :chat
           super
           if match = self.class.list.find{|car| body =~ Regexp.new(Regexp.escape(car[:call]),true) }
-            reply match[:url]
+            reply match[:response]
             return nil
           end
         end

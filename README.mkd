@@ -1,6 +1,8 @@
 Ceiling Cat
 ====================
-Is watching you chat. A plugin powered chat bot compatible with multiple chat services, including Campfire.
+...is watching you chat.
+
+A plugin powered chat bot compatible with Campfire, with more services planned soon.
 
 Installation
 ------------
@@ -10,10 +12,157 @@ What is Ceiling Cat?
 ------------
 Ceiling Cat watches you chat.
 
-Ceiling Cat started as a project at Zencoder to monitor our support chat in Campfire.
+Ceiling Cat started as a project at [Zencoder](http://zencoder.com) to monitor our [support chat](http://zencoder.com/chat) in Campfire and is now available for you to watch over your own chat rooms.
 
 How do I work this thing?
 ------------
-  $ ceiling_cat
+Create a directory where your Ceiling Cat can live.
 
-Ceiling Cat will look for a Chatfile containing information about what service to use, what plugins to use, and any other configuration details. Check out an example Chatfile in the examples directory.
+Install the gem. You can use bundler and a Gemfile:
+
+    gem 'ceiling_cat'
+
+or you can install it from the command line:
+
+    $ gem install ceiling_cat
+  
+Once it's installed you'll see some directions on getting started, which are paraphrased here.
+
+In your Ceiling Cat's directory run
+
+    $ ceiling_cat setup
+  
+to create the basic structure of a Ceiling Cat app. This will copy a Chatfile and Rakefile over for you and create a plugins folder.
+
+Edit your Chatfile with your Campfire credentials (more services coming soon) and then run
+
+    $ ceiling_cat
+  
+and Ceiling Cat will start watching the room you specified.
+
+You mentioned something about plugins...
+------------
+That's true! Ceiling Cat interacts with chat messages through plugins, and comes with several to get you running right away.
+
+If you've loaded the About plugin, type
+
+    !plugins
+    !commands
+    
+in chat to see a list of the plugins you have currently loaded and the commands that each makes available. These commands are scoped by user role, so make sure you're on a registered (non-guest) account to see everything.
+
+### About ###
+
+The about plugin makes some general information about the current room and Ceiling Cat available.
+
+### Calc ###
+
+A calculator. Believe it.
+
+### Call and Response ###
+
+Have Ceiling Cat watch for phrases and respond when it sees it.
+
+Add a response by default in you Chatfile
+
+    CeilingCat::Plugin::CallAndResponse.add(
+        :call => "what's the deal",
+        :response => http://www.seinfeldscripts.com/images/seinfeld1.jpg)
+
+### Campfire Account Monitor ###
+
+Campfire plans have a limit on how many simultaneous connections can be made. Set your plans limit and Ceiling Cat will check if you're close to the limit when someone joins the chat room it's in.
+
+### Days ###
+
+Check if the day is a weekend or a holiday. Holidays are set through chat or in your Chatfile.
+
+Add some holidays in your Chatfile
+
+    CeilingCat::Plugin::Days.add_to_holidays(%w{ 2011-01-17 2011-02-21 })
+
+### General ###
+
+Open a debugger in the console, in case things are going wonky.
+
+### Greeter ###
+
+Say hello to registered users and guests when they enter. At Zencoder we use this to list employees when guests enter the room, and provide some links and other info if nobody is around.
+
+### Notifo ###
+
+Send messages out using Notifo. Set it up in your chatfile. At Zencoder we use this to notify us if no employees are in the room and a guest comes in.
+
+Set up Notifo in your Chatfile
+
+    CeilingCat::Plugin::Notifo.set_credentials('service_name','api_secret')
+    CeilingCat::Plugin::Notifo.add_users(%w{ notifo_account })
+
+Can I make my own plugins?
+------------
+Ceiling Cat comes with several plugins for you to use right away, but you can also create your own. Just run
+
+    $ rake plugin:create name=plugin_name
+  
+where plugin_name is the name of your plugin, and the skeleton of a plugin will be created in the plugins folder. Require it in your Chatfile, add it to the plugins array in CeilingCat::Setup, and Ceiling Cat will start using your plugin while it watches you chat.
+
+Take a look at plugins/base.rb in the gem to see what methods are available to you.
+
+What about storing data?
+------------
+Ceiling Cat can write to memory or to a YAML file. Set that up in your Chatfile and you'll be ready to start storing data.
+
+    CeilingCat::Storage::Yaml.file = "ceilingcat.yml"
+    config.storage = CeilingCat::Storage::Yaml
+    
+Once that's done all you have to do is call
+
+    store["foo"] = "bar"
+    store["foo"] #=> bar
+    
+and Ceiling Cat will store your data. Use YAML if you want your data to be persistent, or don't set anything and Ceiling Cat will write to memory.
+
+Contributing
+------------
+In the spirit of [free software](http://www.fsf.org/licensing/essays/free-sw.html), **everyone** is encouraged to help improve this project.
+
+Here are some ways *you* can contribute:
+
+* by using alpha, beta, and prerelease versions
+* by reporting bugs
+* by suggesting new features
+* by writing or editing documentation
+* by writing specifications
+* by writing code (**no patch is too small**: fix typos, add comments, clean up inconsistent whitespace)
+* by refactoring code
+* by closing [issues](http://github.com/zencoder/ceiling-cat/issues)
+* by reviewing patches
+
+All contributors will be added to the [HISTORY](https://github.com/zencoder/ceiling-cat/blob/master/HISTORY.mkd)
+file and will receive the respect and gratitude of the community.
+
+Submitting an Issue
+-------------------
+We use the [GitHub issue tracker](http://github.com/zencoder/ceiling=cat/issues) to track bugs and
+features. Before submitting a bug report or feature request, check to make sure it hasn't already
+been submitted. You can indicate support for an existing issuse by voting it up. When submitting a
+bug report, please include a [Gist](http://gist.github.com/) that includes a stack trace and any
+details that may be necessary to reproduce the bug, including your gem version, Ruby version, and
+operating system. Ideally, a bug report should include a pull request with failing specs.
+
+Submitting a Pull Request
+-------------------------
+1. Fork the project.
+2. Create a topic branch.
+3. Implement your feature or bug fix.
+4. Add documentation for your feature or bug fix.
+5. Run <tt>bundle exec rake doc:yard</tt>. If your changes are not 100% documented, go back to step 4.
+6. Add specs for your feature or bug fix.
+7. Run <tt>bundle exec rake spec</tt>. If your changes are not 100% covered, go back to step 6.
+8. Commit and push your changes.
+9. Submit a pull request. Please do not include changes to the gemspec, version, or history file. (If you want to create your own version for some reason, please do so in a separate commit.)
+
+Copyright
+---------
+Copyright (c) 2011 Chris Warren/[Zencoder](http://zencoder.com)
+See [LICENSE](https://github.com/zencoder/ceiling-cat/blob/master/LICENSE.mkd) for details.
