@@ -13,7 +13,7 @@ module CeilingCat
         begin
           loop do
             begin
-              Timeout::timeout(60) do
+              Timeout::timeout(300) do
                 @campfire_room.listen do |event|
                   begin
                     if event[:type] != "TimestampMessage"
@@ -32,13 +32,15 @@ module CeilingCat
                 end
               end
             rescue Timeout::Error
-              puts "timeout! trying again..."
-              retry
+              retry # Reconnect regularly to keep CC talking with Campfire
             end
           end
         rescue Faraday::Error::ParsingError
           puts "Error parsing response. Campfire may be down."
           break
+        rescue HTTP::Parser::Error
+          puts "Trouble parsing the HTTP response."
+          retry
         rescue ReloadException => e
           retry
         rescue NoMethodError => e
