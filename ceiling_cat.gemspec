@@ -59,7 +59,8 @@ eos
   s.add_dependency "crack"
 
   s.add_development_dependency "rspec"
-  s.add_development_dependency "autotest"
+  s.add_development_dependency "ruby-debug"
+  s.add_development_dependency "fakeweb"
 
   s.files         = base + setup + plugins + storage + campfire
   s.test_files    = []

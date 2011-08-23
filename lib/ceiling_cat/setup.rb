@@ -35,6 +35,8 @@ module CeilingCat
     def connect
       case self.config.service.downcase
       when 'campfire'
+        require 'ruby-debug'
+        debugger
         connection = CeilingCat::Campfire::Connection.new(self.config)
         room = CeilingCat::Campfire::Room.new(:connection => connection, :room_name => self.config.room)
         room.watch
