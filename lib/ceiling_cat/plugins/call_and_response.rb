@@ -67,7 +67,7 @@ module CeilingCat
         store["call_and_responses"] = (store["call_and_responses"] + [{:call => opts[:call], :response => opts[:response]}]).uniq
       end
 
-      def self.remove(phrase)
+      def self.remove(call)
         store["call_and_responses"] ||= []
         store["call_and_responses"] = store["call_and_responses"].reject{|car| car[:call].downcase == call.downcase }
       end

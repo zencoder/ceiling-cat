@@ -4,7 +4,7 @@ module CeilingCat
   module Campfire
     class Connection < CeilingCat::Connection
       def initialize(config)
-        @config=config
+        super
         @config.ssl ||= "true"
       end
 
