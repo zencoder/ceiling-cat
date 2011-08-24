@@ -18,7 +18,11 @@ module CeilingCat
         def internal
           @internal ||= {}
         end
-  
+
+        def clear
+          @internal = nil
+        end
+
       end
     end
   end

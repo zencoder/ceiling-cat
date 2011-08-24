@@ -5,6 +5,8 @@ require 'rspec'
 require 'ceiling_cat'
 require 'fakeweb'
 
+require 'ceiling_cat/storage/hash'
+
 FakeWeb.allow_net_connect = false
 
 def fixture(name)

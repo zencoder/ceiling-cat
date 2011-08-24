@@ -4,11 +4,11 @@ module CeilingCat
       
       def type
         case @type
-        when "EnterMessage"
+        when "EnterMessage", :entrance
           :entrance
-        when "TextMessage"
+        when "TextMessage", :chat
           :chat
-        when "LeaveMessage", "KickMessage"
+        when "LeaveMessage", "KickMessage", :exit
           :exit
         end
       end

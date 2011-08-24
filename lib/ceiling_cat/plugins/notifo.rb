@@ -18,9 +18,6 @@ module CeilingCat
                             :body => { :to => user, :msg => message },
                             :basic_auth => {:username => store["notifo_credentials"][:username], :password => store["notifo_credentials"][:api_secret]})
           end
-        else
-          debugger
-          puts "here"
         end
       end
 

@@ -1,12 +1,13 @@
 module CeilingCat
   module Campfire
     class Room < CeilingCat::Room
+      attr_accessor :campfire_room
 
       def initialize(opts={})
         super
         @campfire_room = @connection.campfire.find_room_by_name(opts[:room_name])
       end
-      
+
       def watch
         puts "Watching room..."
         setup_interrupts
@@ -18,7 +19,7 @@ module CeilingCat
                   begin
                     if event[:type] != "TimestampMessage"
                       user = CeilingCat::User.new(event[:user][:name], :id => event[:user][:id], :role => event[:user][:type])
-                    
+
                       unless is_me?(user) # Otherwise CC will talk to itself
                         event = CeilingCat::Campfire::Event.new(self,event[:body], user, :type => event[:type])
                         event.handle
@@ -58,15 +59,15 @@ module CeilingCat
           retry
         end
       end
-      
+
       def is_me?(user)
         user.id == me.id
       end
-      
+
       def me
         @me ||= CeilingCat::User.new(@connection.campfire.me[:name], :id => @connection.campfire.me[:id], :role => @connection.campfire.me[:type])
       end
-      
+
       def users_in_room(opts={})
         if opts[:reload] || @users_in_room.nil?
           puts "Requesting user list"
@@ -85,13 +86,13 @@ module CeilingCat
           end
         end
       end
-            
+
       def say(something_to_say)
         Array(something_to_say).each do |line|
           @campfire_room.speak(line)
         end
       end
-      
+
       def setup_interrupts
         trap('INT') do
           puts "Leaving room...."

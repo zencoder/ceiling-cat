@@ -23,7 +23,7 @@ module CeilingCat
     end
     
     def type # assume that all messages are just text unless the specific room type overrides it.
-      :chat
+      @type || :chat
     end
   end
 end

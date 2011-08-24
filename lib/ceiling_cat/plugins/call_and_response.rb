@@ -3,11 +3,11 @@ module CeilingCat
     class CallAndResponse < CeilingCat::Plugin::Base
       def handle
         if event.type == :chat
-          super
           if match = self.class.list.find{|car| body =~ Regexp.new(Regexp.escape(car[:call]),true) }
             reply match[:response]
             return nil
           end
+          super
         end
         
       end
@@ -43,7 +43,7 @@ module CeilingCat
       end
 
       def add
-        message = body_without_nick_or_command("add call").split
+        message = body_without_nick_or_command("add call")
         call, response = message.split("|")
         if self.class.add(:call => call.strip,:response => response.strip)
           reply "Call and Response added."

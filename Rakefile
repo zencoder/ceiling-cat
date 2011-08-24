@@ -4,8 +4,6 @@ namespace :gem do
   namespace :plugin do
     desc "Create a new plugin"
     task :create do
-      require 'ruby-debug'
-      debugger
       raise "You need to set a name! `rake plugin:create name=[plugin_name]`" unless ENV["name"]
       name = ENV["name"].downcase
       file = File.join("lib", "ceiling_cat", "plugins", "#{name}.rb")

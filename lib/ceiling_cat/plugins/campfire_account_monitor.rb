@@ -12,7 +12,9 @@ module CeilingCat
         if room.connection.config.service.downcase == "campfire" && event.type == :entrance
           user_count = room.connection.total_user_count
           max_users = room.connection.config.max_users || 100
-          room.plugin("notifo").new(@event).deliver("#{user_count} of #{max_users} max  connections to Campfire.") if room.plugin_installed?("notifo") && user_count > max_users-2
+          if room.plugin_installed?("notifo") && user_count > max_users-2
+            room.plugin("notifo").new(@event).deliver("#{user_count} of #{max_users} max connections to Campfire.") 
+          end
         end
         super
       end

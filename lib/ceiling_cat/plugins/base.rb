@@ -53,7 +53,7 @@ module CeilingCat
       end
       
       def self.store
-        CeilingCat::Setup.config.storage
+        CeilingCat::Setup.config ? CeilingCat::Setup.config.storage : CeilingCat::Storage::Hash
       end
 
       def body
