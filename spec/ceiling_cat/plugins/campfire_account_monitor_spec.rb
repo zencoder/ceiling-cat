@@ -42,10 +42,4 @@ describe "Campfire Account Monitor" do
       CeilingCat::Plugin::CampfireAccountMonitor.new(event).handle
     end
   end
-
-  describe "a guest enters chat" do
-    it "should add an entry" do
-
-    end
-  end
 end
