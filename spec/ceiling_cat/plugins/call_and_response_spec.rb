@@ -44,7 +44,7 @@ describe "Call and Response" do
         it "should not say anything" do
           event = CeilingCat::Event.new(@room,"!list calls", @guest_user)
           @room.should_not_receive(:say)
-          response = CeilingCat::Plugin::CallAndResponse.new(event).handle
+          CeilingCat::Plugin::CallAndResponse.new(event).handle
         end
       end
 
@@ -52,7 +52,7 @@ describe "Call and Response" do
         it "should not say anything" do
           event = CeilingCat::Event.new(@room,"!add call you say something | something witty", @guest_user)
           @room.should_not_receive(:say)
-          response = CeilingCat::Plugin::CallAndResponse.new(event).handle
+          CeilingCat::Plugin::CallAndResponse.new(event).handle
         end
       end
 
@@ -60,7 +60,7 @@ describe "Call and Response" do
         it "should not say anything" do
           event = CeilingCat::Event.new(@room,"!remove call you say something", @guest_user)
           @room.should_not_receive(:say)
-          response = CeilingCat::Plugin::CallAndResponse.new(event).handle
+          CeilingCat::Plugin::CallAndResponse.new(event).handle
         end
       end
     end
@@ -74,7 +74,7 @@ describe "Call and Response" do
         it "should list the calls" do
           event = CeilingCat::Event.new(@room,"!list calls", @registered_user)
           @room.should_receive(:say).with(["Current Calls and Responses", "-- foo | bar"])
-          response = CeilingCat::Plugin::CallAndResponse.new(event).handle
+          CeilingCat::Plugin::CallAndResponse.new(event).handle
         end
       end
 
@@ -82,7 +82,7 @@ describe "Call and Response" do
         it "should add a call" do
           event = CeilingCat::Event.new(@room,"!add call you say something | something witty", @registered_user)
           @room.should_receive(:say).with("Call and Response added.")
-          response = CeilingCat::Plugin::CallAndResponse.new(event).handle
+          CeilingCat::Plugin::CallAndResponse.new(event).handle
         end
       end
 
@@ -90,7 +90,7 @@ describe "Call and Response" do
         it "should remove a call" do
           event = CeilingCat::Event.new(@room,"!remove call you say something", @registered_user)
           @room.should_receive(:say).with("Call removed.")
-          response = CeilingCat::Plugin::CallAndResponse.new(event).handle
+          CeilingCat::Plugin::CallAndResponse.new(event).handle
         end
       end
     end
@@ -107,7 +107,7 @@ describe "Call and Response" do
       it "should say the response" do
         event = CeilingCat::Event.new(@room, @call, @registered_user)
         @room.should_receive(:say).with(@response)
-        response = CeilingCat::Plugin::CallAndResponse.new(event).handle
+        CeilingCat::Plugin::CallAndResponse.new(event).handle
       end
     end
 
@@ -115,7 +115,7 @@ describe "Call and Response" do
       it "should say the response" do
         event = CeilingCat::Event.new(@room, "Who are they talking about when they ask #{@call.downcase}", @registered_user)
         @room.should_receive(:say).with(@response)
-        response = CeilingCat::Plugin::CallAndResponse.new(event).handle
+        CeilingCat::Plugin::CallAndResponse.new(event).handle
       end
     end
   end

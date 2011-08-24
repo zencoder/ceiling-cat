@@ -1,6 +1,6 @@
 module CeilingCat
   class NotADateError < CeilingCatError; end
-  
+
   module Plugin
     class Days < CeilingCat::Plugin::Base
       def self.commands
@@ -62,8 +62,7 @@ module CeilingCat
           end
         end
 
-        store["holidays"] ||= []
-        store["holidays"] = (store["holidays"] + dates).uniq
+        store["holidays"] = (holidays + dates).uniq
       end
 
       def self.remove_from_holidays(days)
@@ -75,13 +74,12 @@ module CeilingCat
           end
         end
         
-        store["holidays"] ||= []
-        store["holidays"] = store["holidays"] - dates
+        store["holidays"] = holidays - dates
       end
       
       def self.is_a_holiday?(date=Date.today)
         if is_a_date?(date)
-          store["holidays"].include? Date.parse(date.to_s)
+          holidays.include? Date.parse(date.to_s)
         else
           raise NotADateError
         end

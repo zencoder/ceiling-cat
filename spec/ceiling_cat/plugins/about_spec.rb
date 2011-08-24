@@ -23,7 +23,7 @@ describe "About" do
       it "should not say anything" do
         event = CeilingCat::Event.new(@room,"!plugins", @guest_user)
         @room.should_not_receive(:say)
-        response = CeilingCat::Plugin::About.new(event).handle
+        CeilingCat::Plugin::About.new(event).handle
       end
     end
     
@@ -31,7 +31,7 @@ describe "About" do
       it "should not list public commands" do
         event = CeilingCat::Event.new(@room,"!commands", @guest_user)
         @room.should_receive(:say).with(@room.available_commands+["Run commands with '![command]' or '#{@room.me.name}: [command]'"])
-        response = CeilingCat::Plugin::About.new(event).handle
+        CeilingCat::Plugin::About.new(event).handle
       end
     end
   end
@@ -45,7 +45,7 @@ describe "About" do
       it "should not say anything" do
         event = CeilingCat::Event.new(@room,"!plugins", @registered_user)
         @room.should_receive(:say).with(@room.plugin_descriptions(true))
-        response = CeilingCat::Plugin::About.new(event).handle
+        CeilingCat::Plugin::About.new(event).handle
       end
     end
     
@@ -53,7 +53,7 @@ describe "About" do
       it "should not list public commands" do
         event = CeilingCat::Event.new(@room,"!commands", @registered_user)
         @room.should_receive(:say).with(@room.available_commands(true)+["Run commands with '![command]' or '#{@room.me.name}: [command]'"])
-        response = CeilingCat::Plugin::About.new(event).handle
+        CeilingCat::Plugin::About.new(event).handle
       end
     end
   end
