@@ -1,6 +1,5 @@
 require 'spec_helper'
 require 'ceiling_cat/plugins/days'
-require 'ceiling_cat/plugins/notifo'
 
 describe "Days" do
   before(:each) do
@@ -146,6 +145,54 @@ describe "Days" do
             CeilingCat::Plugin::Days.stub(:is_a_weekend?).and_return(false)
 
             event = CeilingCat::Event.new(@room,"!today", @guest_user)
+            @room.should_receive(:say).with("Just a normal day today.")
+            CeilingCat::Plugin::Days.new(event).handle
+          end
+        end
+      end
+    end
+    
+    describe "from a registered user" do
+      before(:each) do
+        @registered_user = CeilingCat::User.new("Guest", :id => 12345, :role => "member")
+      end
+
+      describe "calling the 'add holiday' command" do
+        it "should add a holiday" do
+          holiday = "1/19/2011"
+          event = CeilingCat::Event.new(@room,"!add holiday #{holiday}", @registered_user)
+          @room.should_receive(:say).with("#{holiday} has been added to the holiday list.")
+          CeilingCat::Plugin::Days.new(event).handle
+          @room.store["holidays"].should include(Date.parse(holiday))
+        end
+      end
+
+      describe "calling the 'today' command" do
+        describe "when today is a holiday" do
+          it "should say today is a holiday" do
+            CeilingCat::Plugin::Days.stub(:is_a_holiday?).and_return(true)
+
+            event = CeilingCat::Event.new(@room,"!today", @registered_user)
+            @room.should_receive(:say).with("Today is a holiday!")
+            CeilingCat::Plugin::Days.new(event).handle
+          end
+        end
+
+        describe "when today is a weekend" do
+          it "should say today is a holiday" do
+            CeilingCat::Plugin::Days.stub(:is_a_weekend?).and_return(true)
+
+            event = CeilingCat::Event.new(@room,"!today", @registered_user)
+            @room.should_receive(:say).with("Today is a weekend!")
+            CeilingCat::Plugin::Days.new(event).handle
+          end
+        end
+
+        describe "when today is a weekday" do
+          it "should say today is a holiday" do
+            CeilingCat::Plugin::Days.stub(:is_a_weekend?).and_return(false)
+
+            event = CeilingCat::Event.new(@room,"!today", @registered_user)
             @room.should_receive(:say).with("Just a normal day today.")
             CeilingCat::Plugin::Days.new(event).handle
           end
