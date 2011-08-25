@@ -54,11 +54,11 @@ Gem::Specification.new do |s|
   ********************************************************************************
 eos
 
-  s.add_dependency "tinder"
-  s.add_dependency "httparty"
-  s.add_dependency "crack"
+  s.add_dependency "tinder", "1.4.4"
+  s.add_dependency "httparty", "0.7.8"
+  s.add_dependency "crack", "0.1.8"
 
-  s.add_development_dependency "rspec"
+  s.add_development_dependency "rspec", "2.6.0"
   s.add_development_dependency "ruby-debug"
   s.add_development_dependency "fakeweb"
 
