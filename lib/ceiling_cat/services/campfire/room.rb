@@ -27,7 +27,6 @@ module CeilingCat
                       end
                     end
                   rescue => e
-                    say "An error occurred with Campfire: #{e}" if debug_mode?
                     raise e
                   end
                 end
@@ -52,7 +51,6 @@ module CeilingCat
           retry
         rescue StandardError => e
           puts e.class
-          debugger if debug_mode?
           e.backtrace.each do |line|
             puts "Backtrace: #{line}"
           end

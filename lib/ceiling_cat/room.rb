@@ -43,10 +43,6 @@ module CeilingCat
       @connection.storage
     end
 
-    def debug_mode?
-      !store["debug_mode"].nil? && store["debug_mode"] == "true"
-    end
-
     def plugin_descriptions(show_private=false)
       messages = []
       plugins.each do |plugin|
