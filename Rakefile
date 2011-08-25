@@ -7,10 +7,15 @@ namespace :gem do
       raise "You need to set a name! `rake plugin:create name=[plugin_name]`" unless ENV["name"]
       name = ENV["name"].downcase
       file = File.join("lib", "ceiling_cat", "plugins", "#{name}.rb")
+      test_file = File.join("spec", "ceiling_cat", "plugins", "#{name}_spec.rb")
 
-      unless File.exists? file
+      unless File.exists? file || File.exists? test_file
         contents = plugin_base(name)
         File.open(file, 'w') {|f| f.write(contents) }
+
+        test_contents = plugin_test_base(name).gsub('\#','#')
+        File.open(test_file, 'w') {|f| f.write(test_contents) }
+
         puts "Plugin '#{name}' created at #{file}."
         puts "Make sure you require it in your Chatfile and add it to your config.plugins so it runs."
       else
@@ -54,6 +59,84 @@ namespace :gem do
 
       def #{name}
         reply "You've created the '#{name.capitalize}' plugin. Now make it do something awesome!"
+      end
+    end
+  end
+end
+}
+  end
+
+  def plugin_test_base(name)
+%Q{require 'spec_helper'
+require 'ceiling_cat/plugins/#{name}'
+
+describe "#{name.camelize}" do
+  before(:each) do
+    CeilingCat::Storage::Hash.send "clear" # Clear the calls and response each time.
+
+    user = "user"
+    token = "1234abcd"
+    plugins = [CeilingCat::Plugin::#{name.camelize}]
+
+    FakeWeb.register_uri(:get, "https://\#{token}:X@\#{user}.campfirenow.com/rooms.json", :body => fixture('campfire/rooms.json'), :status => ["200"])
+    FakeWeb.register_uri(:get, "https://\#{token}:X@\#{user}.campfirenow.com/users/me.json", :body => fixture('campfire/me.json'), :status => ["200"])
+
+    @connection = CeilingCat::Campfire::Connection.new(OpenStruct.new({:service => 'campfire', :username => user, :token => token, :room => 'Room 1', :plugins => plugins}))
+    @room = CeilingCat::Campfire::Room.new(:connection => @connection, :room_name => @connection.config.room)
+  end
+
+  describe "base methods" do
+    # Tests for any methods that run outside of a command
+  end
+
+  describe "commands" do
+    # Tests for commands
+    describe "from a guest user" do
+      before(:each) do
+        @guest_user = CeilingCat::User.new("Guest", :id => 12345, :role => "guest")
+      end
+
+      describe "calling the 'default' command" do
+        it "should not do or say anything" do
+          event = CeilingCat::Event.new(@room,"!#{name}", @guest_user)
+          @room.should_not_receive(:say)
+          CeilingCat::Plugin::#{name.camelize}.new(event).handle
+        end
+      end
+    end
+
+    describe "from a registered user" do
+      before(:each) do
+        @registered_user = CeilingCat::User.new("Guest", :id => 12345, :role => "member")
+      end
+
+      describe "calling the 'default' command" do
+        it "should call the 'default' method" do
+          event = CeilingCat::Event.new(@room,"!#{name}", @registered_user)
+          @room.should_receive(:say).with("You've created the '#{name.capitalize}' plugin. Now make it do something awesome!")
+          CeilingCat::Plugin::#{name.camelize}.new(event).handle
+        end
+      end
+    end
+  end
+
+  describe 'entrance and exit' do
+    # Tests for things to run when a user enters or exits the room
+    describe "entering the room" do
+      before(:each) do
+        @registered_user = CeilingCat::User.new("Guest", :id => 12345, :role => "member", :type => :entrance)
+      end
+
+      it "should do something" do
+      end
+    end
+
+    describe "exiting the room" do
+      before(:each) do
+        @registered_user = CeilingCat::User.new("Guest", :id => 12345, :role => "member", :type => :exit)
+      end
+
+      it "should do something" do
       end
     end
   end

@@ -21,8 +21,16 @@ module CeilingCat
         end
       end
 
+      def self.active?
+        if store["notifo_credentials"] && store["notifo_credentials"][:username].present? && store["notifo_credentials"][:api_secret].present? && Array(store["notifo_users"]).size > 0
+          true
+        else
+          false
+        end
+      end
+      
       def active?
-        store["notifo_credentials"] && store["notifo_credentials"][:username].present? && store["notifo_credentials"][:api_secret].present? && Array(store["notifo_users"]).size > 0
+        self.class.active?
       end
 
       def self.name
@@ -37,6 +45,11 @@ module CeilingCat
         store["notifo_users"] ||= []
         store["notifo_users"] = (Array(store["notifo_users"]) + Array(users)).uniq
       end
+      
+      def self.remove_users(users)
+        store["notifo_users"] ||= []
+        store["notifo_users"] = (Array(store["notifo_users"]) - Array(users)).uniq
+      end
 
       def self.set_credentials(username, api_secret)
         store["notifo_credentials"] = {:username => username, :api_secret => api_secret}
@@ -50,8 +63,7 @@ module CeilingCat
 
       def remove_users
         users = body_without_nick_or_command("remove notifo users").split(" ")
-        store["notifo_users"] ||= []
-        store["notifo_users"] = store["notifo_users"] - users
+        self.class.remove_users(users)
         reply "#{users.join(" ")} removed from notifo alerts."
       end
 

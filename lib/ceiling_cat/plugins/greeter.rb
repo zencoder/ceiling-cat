@@ -2,7 +2,7 @@ module CeilingCat
   module Plugin
     class Greeter < CeilingCat::Plugin::Base
       def handle
-        message = []
+        messages = []
 
         if event.type == :entrance
           members = room.users_in_room(:type => "member")
@@ -12,7 +12,7 @@ module CeilingCat
           elsif user.is_registered?
             messages << "Nice to see you again #{user.name}"
           end
-          reply message unless message.empty?
+          reply messages unless messages.empty?
         elsif event.type == :chat
           super
         end

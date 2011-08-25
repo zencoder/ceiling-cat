@@ -30,12 +30,12 @@ describe "Campfire Account Monitor" do
       CeilingCat::Plugin::Notifo.any_instance.should_not_receive(:deliver)
       CeilingCat::Plugin::CampfireAccountMonitor.new(event).handle
     end
-    
+
     it "should send a Notifo if the limit is approached" do
       @connection.stub!(:total_user_count).and_return(24)
       CeilingCat::Plugin::Notifo.any_instance.stub(:active?).and_return(true)
       @room.should_not_receive(:say)
-      
+
       event = CeilingCat::Event.new(@room, nil, @guest_user, :type => :entrance)
 
       CeilingCat::Plugin::Notifo.any_instance.should_receive(:deliver).with("24 of 25 max connections to Campfire.")

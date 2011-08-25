@@ -24,7 +24,7 @@ describe "Days" do
           @room.store["holidays"].should include(Date.parse("1/19/2011"))
         end
 
-        it "should faile with a bad date/non-date" do
+        it "should fail with a bad date/non-date" do
           lambda{ CeilingCat::Plugin::Days.add_to_holidays("My birthday") }.should raise_error CeilingCat::NotADateError
           @room.store["holidays"].should == nil
         end
@@ -40,7 +40,7 @@ describe "Days" do
           @room.store["holidays"].should == []
         end
 
-        it "should faile with a bad date/non-date" do
+        it "should fail with a bad date/non-date" do
           lambda{ CeilingCat::Plugin::Days.remove_from_holidays("My birthday") }.should raise_error CeilingCat::NotADateError
           @room.store["holidays"].should include(Date.parse("1/19/2011"))
         end
