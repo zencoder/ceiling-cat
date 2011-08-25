@@ -12,7 +12,7 @@ describe "Connection" do
   
   describe "creating an instance" do
     it "uses the defaul if there's no storage option passed" do
-      config = OpenStruct.new({:service => 'campfire', :username => 'user', :token => '1234abcd', :room => 'Room'})
+      config = OpenStruct.new({:service => 'campfire', :subdomain => 'user', :token => '1234abcd', :room => 'Room'})
       cc = CeilingCat::Connection.new(config)
       cc.config.storage.should == CeilingCat::Storage::Hash
     end

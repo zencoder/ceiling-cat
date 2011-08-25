@@ -6,7 +6,7 @@ describe "Campfire Account Monitor" do
   before(:each) do
     CeilingCat::Storage::Hash.send "clear" # Clear the calls and response each time.
 
-    user = "user"
+    subdomain = "subdomain"
     token = "1234abcd"
     plugins = [CeilingCat::Plugin::CampfireAccountMonitor, CeilingCat::Plugin::Notifo]
     @user_limit = 25
@@ -14,7 +14,7 @@ describe "Campfire Account Monitor" do
     FakeWeb.register_uri(:get, "https://#{token}:X@#{user}.campfirenow.com/rooms.json", :body => fixture('campfire/rooms.json'), :status => ["200"])
     FakeWeb.register_uri(:get, "https://#{token}:X@#{user}.campfirenow.com/users/me.json", :body => fixture('campfire/me.json'), :status => ["200"])
 
-    @connection = CeilingCat::Campfire::Connection.new(OpenStruct.new({:service => 'campfire', :username => user, :token => token, :room => 'Room 1', :plugins => plugins, :max_users => @user_limit}))
+    @connection = CeilingCat::Campfire::Connection.new(OpenStruct.new({:service => 'campfire', :subdomain => subdomain, :token => token, :room => 'Room 1', :plugins => plugins, :max_users => @user_limit}))
     @room = CeilingCat::Campfire::Room.new(:connection => @connection, :room_name => @connection.config.room)
     @guest_user = CeilingCat::User.new("Guest", :id => 12345, :role => "guest")
   end

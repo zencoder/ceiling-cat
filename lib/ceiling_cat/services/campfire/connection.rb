@@ -9,7 +9,7 @@ module CeilingCat
       end
 
       def campfire
-        @campfire = Tinder::Campfire.new(self.config.username, :token => self.config.token, :ssl => self.config.ssl)
+        @campfire = Tinder::Campfire.new(self.config.subdomain, :token => self.config.token, :ssl => self.config.ssl)
       end
       
       def total_user_count
