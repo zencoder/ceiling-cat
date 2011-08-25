@@ -9,7 +9,7 @@ namespace :gem do
       file = File.join("lib", "ceiling_cat", "plugins", "#{name}.rb")
       test_file = File.join("spec", "ceiling_cat", "plugins", "#{name}_spec.rb")
 
-      unless File.exists? file || File.exists? test_file
+      unless File.exists?(file) || File.exists?(test_file)
         contents = plugin_base(name)
         File.open(file, 'w') {|f| f.write(contents) }
 

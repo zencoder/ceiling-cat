@@ -6,7 +6,7 @@ namespace :plugin do
     file = File.join("plugins", "#{name}.rb")
       test_file = File.join("spec", "plugins", "#{name}_spec.rb")
 
-      unless File.exists? file || File.exists? test_file
+      unless File.exists?(file) || File.exists?(test_file)
         contents = plugin_base(name)
         File.open(file, 'w') {|f| f.write(contents) }
 
@@ -64,8 +64,7 @@ end
   end
 
   def plugin_test_base(name)
-%Q{require 'spec_helper'
-require 'ceiling_cat/plugins/#{name}'
+%Q{require 'plugins/#{name}'
 
 describe "#{name.camelize}" do
   before(:each) do
