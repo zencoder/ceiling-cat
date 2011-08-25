@@ -25,6 +25,7 @@ plugins = ["lib/ceiling_cat/plugins/base.rb",
            "lib/ceiling_cat/plugins/notifo.rb",]
 
 storage = ["lib/ceiling_cat/storage/base.rb",
+           "lib/ceiling_cat/storage/hash.rb",
            "lib/ceiling_cat/storage/yaml.rb"]
 
 campfire = ["lib/ceiling_cat/services/campfire.rb",
