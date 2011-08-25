@@ -21,7 +21,6 @@ plugins = ["lib/ceiling_cat/plugins/base.rb",
            "lib/ceiling_cat/plugins/call_and_response.rb",
            "lib/ceiling_cat/plugins/campfire_account_monitor.rb",
            "lib/ceiling_cat/plugins/days.rb",
-           "lib/ceiling_cat/plugins/general.rb",
            "lib/ceiling_cat/plugins/greeter.rb",
            "lib/ceiling_cat/plugins/notifo.rb",]
 

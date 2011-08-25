@@ -81,10 +81,6 @@ Add some holidays in your Chatfile
 
     CeilingCat::Plugin::Days.add_to_holidays(%w{ 2011-01-17 2011-02-21 })
 
-### General ###
-
-Open a debugger in the console, in case things are going wonky.
-
 ### Greeter ###
 
 Say hello to registered users and guests when they enter. At Zencoder we use this to list employees when guests enter the room, and provide some links and other info if nobody is around.
