@@ -36,8 +36,8 @@ module CeilingCat
             end
           end
         rescue Faraday::Error::ParsingError
-          puts "Error parsing response. Campfire may be down."
-          break
+          puts "Error parsing response. Campfire may be down. Trying again."
+          retry
         rescue HTTP::Parser::Error
           puts "Trouble parsing the HTTP response."
           retry
