@@ -4,10 +4,6 @@ Ceiling Cat
 
 A plugin powered chat bot compatible with Campfire, with more services planned soon.
 
-Installation
-------------
-    gem install ceilingcat
-
 What is Ceiling Cat?
 ------------
 Ceiling Cat watches you chat.
