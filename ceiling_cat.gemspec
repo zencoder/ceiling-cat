@@ -54,7 +54,7 @@ Gem::Specification.new do |s|
   ********************************************************************************
 eos
 
-  s.add_dependency "tinder", "1.4.4"
+  s.add_dependency "tinder", "1.6.0"
   s.add_dependency "httparty", "0.7.8"
   s.add_dependency "crack", "0.1.8"
 
