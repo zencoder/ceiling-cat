@@ -4,8 +4,8 @@ module CeilingCat
 
     def initialize(name, opts={})
       @name = name
-      @id = opts[:id]
-      @role = opts[:role]
+      @id = opts[:id] || rand(10000000)
+      @role = opts[:role] || "guest"
     end
     
     def to_s

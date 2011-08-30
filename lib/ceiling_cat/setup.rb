@@ -38,6 +38,10 @@ module CeilingCat
         connection = CeilingCat::Campfire::Connection.new(self.config)
         room = CeilingCat::Campfire::Room.new(:connection => connection, :room_name => self.config.room)
         room.watch
+      when 'irc'
+        connection = CeilingCat::IRC::Connection.new(self.config)
+        room = CeilingCat::IRC::Room.new(:connection => connection, :room_name => self.config.room)
+        room.watch
       else
         raise CeilingCat::UnsupportedChatServiceError.new("#{self.config.service} is not a supported chat service.")
       end

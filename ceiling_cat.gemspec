@@ -32,6 +32,11 @@ campfire = ["lib/ceiling_cat/services/campfire.rb",
             "lib/ceiling_cat/services/campfire/connection.rb",
             "lib/ceiling_cat/services/campfire/event.rb",
             "lib/ceiling_cat/services/campfire/room.rb"]
+            
+irc = ["lib/ceiling_cat/services/irc.rb",
+       "lib/ceiling_cat/services/irc/connection.rb",
+       "lib/ceiling_cat/services/irc/event.rb",
+       "lib/ceiling_cat/services/irc/room.rb"]
 
 Gem::Specification.new do |s|
   s.name        = "ceiling_cat"
@@ -57,12 +62,13 @@ eos
   s.add_dependency "tinder", "1.6.0"
   s.add_dependency "httparty", "0.7.8"
   s.add_dependency "crack", "0.1.8"
+  s.add_dependency "irc-socket", "1.0.1"
 
   s.add_development_dependency "rspec", "2.6.0"
   s.add_development_dependency "ruby-debug"
   s.add_development_dependency "fakeweb"
 
-  s.files         = base + setup + plugins + storage + campfire
+  s.files         = base + setup + plugins + storage + campfire + irc
   s.test_files    = []
   s.executables   = ["ceiling_cat"]
   s.require_paths = ["lib"]

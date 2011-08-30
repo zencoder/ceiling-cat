@@ -31,13 +31,21 @@ module CeilingCat
       end
       
       def list_users
-        members = room.list_of_users_in_room(:type => "member")
-        reply "#{members} #{pluralize(members.size, "is a", "are")} #{pluralize(members.size, "registered user")}."
+        members = room.users_in_room(:type => "member")
+        if members.size > 0
+          reply "#{room.list_of_users_in_room(:type => "member")} #{pluralize(members.size, "is a", "are")} #{pluralize(members.size, "registered user")}."
+        else
+          reply "There are no registered users in the room at this time."
+        end
       end
       
       def list_guests
-        guests = room.list_of_users_in_room(:type => "guest")
-        reply "#{guests} #{pluralize(members.size, "is a", "are")} #{pluralize(members.size, "guest")}."
+        guests = room.users_in_room(:type => "guest")
+        if guests.size > 0
+          reply "#{room.list_of_users_in_room(:type => "guest")} #{pluralize(guests.size, "is a", "are")} #{pluralize(guests.size, "guest")}."
+        else
+          reply "There are no guests in the room at this time."
+        end
       end
     end
   end

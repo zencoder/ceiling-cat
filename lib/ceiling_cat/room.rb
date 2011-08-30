@@ -66,11 +66,11 @@ module CeilingCat
 
     def list_of_users_in_room(type=nil)
       users = users_in_room(type)
-      last_user = users.pop
-      if users.size > 0
-        return users.collect{|user| user["name"] }.join(", ") + " and #{ last_user["name"]}"
-      else
-        return last_user["name"]
+      if users.size > 1
+        last_user = users.pop
+        return users.collect{|user| user.name }.join(", ") + " and #{ last_user.name}"
+      elsif users.size == 1
+        return users.first.name
       end
     end
   end

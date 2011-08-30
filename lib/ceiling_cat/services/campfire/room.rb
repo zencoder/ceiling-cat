@@ -72,17 +72,18 @@ module CeilingCat
           @users_in_room = @campfire_room.users
         end
 
-        @users_in_room.find_all do |user|
-          unless is_me?(CeilingCat::User.new(user[:name], :id => user[:id], :role => user[:type]))
+        @users_in_room.collect{ |user_in_room|
+          user = CeilingCat::User.new(user_in_room[:name], :id => user_in_room[:id], :role => user_in_room[:type])
+          unless is_me?(user)
             if opts[:type].present?
-              if user[:type].to_s.downcase == opts[:type].downcase
-                CeilingCat::User.new(user[:name], :id => user[:id], :role => user[:type])
+              if user.role.to_s.downcase == opts[:type].downcase
+                user
               end
             else
-              CeilingCat::User.new(user[:name], :id => user[:id], :role => user[:type])
+              user
             end
           end
-        end
+        }
       end
 
       def say(something_to_say)
