@@ -67,7 +67,7 @@ Add a response by default in you Chatfile
 
 ### Campfire Account Monitor ###
 
-Campfire plans have a limit on how many simultaneous connections can be made. Set your plans limit and Ceiling Cat will check if you're close to the limit when someone joins the chat room it's in.
+Campfire plans have a limit on how many simultaneous connections can be made. Set your plan's limit and Ceiling Cat will check if you're close to the limit when someone joins the chat room it's in.
 
 ### Days ###
 
