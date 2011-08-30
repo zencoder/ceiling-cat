@@ -2,7 +2,7 @@ Ceiling Cat
 ====================
 ...is watching you chat.
 
-A plugin powered chat bot compatible with Campfire, with more services planned soon.
+A plugin powered chat bot currently compatible with Campfire and IRC. Hopefully more services coming soon.
 
 What is Ceiling Cat?
 ------------
