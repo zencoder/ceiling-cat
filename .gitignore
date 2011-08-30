@@ -2,6 +2,6 @@
 .bundle
 Gemfile.lock
 pkg/*
-Chatfile
+Chatfile.testing
 .DS_Store
 ceilingcat.yml

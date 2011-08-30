@@ -1,0 +1,20 @@
+# Require your plugins here
+require 'ceiling_cat/plugins/about'
+
+CeilingCat::Setup.configure do |config|
+  config.service = 'campfire'
+  config.username = 'user'
+  config.token = '1234abcd'
+  config.room = 'Room 1'
+  config.ssl = true
+
+  # Plugns are executed in the order set.
+  # Execution ends once a response is returned by a plugin.
+  #
+  # If any plugins are collecting stats or otherwise not
+  # interacting directly with users but you want to ensure
+  # that they run, list them first.
+  config.plugins = [CeilingCat::Plugin::About]
+
+  config.storage = CeilingCat::Storage::Hash
+end
