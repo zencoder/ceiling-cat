@@ -83,7 +83,7 @@ module CeilingCat
               user
             end
           end
-        }
+        }.compact
       end
 
       def say(something_to_say)
