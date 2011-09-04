@@ -4,20 +4,19 @@ namespace :plugin do
     raise "You need to set a name! `rake plugin:create name=[plugin_name]`" unless ENV["name"]
     name = ENV["name"].downcase
     file = File.join("plugins", "#{name}.rb")
-      test_file = File.join("spec", "plugins", "#{name}_spec.rb")
+    test_file = File.join("spec", "plugins", "#{name}_spec.rb")
 
-      unless File.exists?(file) || File.exists?(test_file)
-        contents = plugin_base(name)
-        File.open(file, 'w') {|f| f.write(contents) }
+    unless File.exists?(file) || File.exists?(test_file)
+      contents = plugin_base(name)
+      File.open(file, 'w') {|f| f.write(contents) }
 
-        test_contents = plugin_test_base(name).gsub('\#','#')
-        File.open(test_file, 'w') {|f| f.write(test_contents) }
+      test_contents = plugin_test_base(name).gsub('\#','#')
+      File.open(test_file, 'w') {|f| f.write(test_contents) }
 
-        puts "Plugin '#{name}' created at #{file}."
-        puts "Make sure you require it in your Chatfile and add it to your config.plugins so it runs."
-      else
-        puts "A plugin named '#{name}' already exists. Try another name."
-      end
+      puts "Plugin '#{name}' created at #{file}."
+      puts "Make sure you require it in your Chatfile and add it to your config.plugins so it runs."
+    else
+      puts "A plugin named '#{name}' already exists. Try another name."
     end
   end
 
