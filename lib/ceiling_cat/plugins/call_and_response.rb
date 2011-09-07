@@ -3,7 +3,7 @@ module CeilingCat
     class CallAndResponse < CeilingCat::Plugin::Base
       def handle
         if event.type == :chat
-          if match = self.class.list.find{|car| body =~ Regexp.new(Regexp.escape(car[:call]),true) }
+          if match = self.class.list.find{|car| body =~ Regexp.new(car[:call],true) }
             reply match[:response]
             return nil
           end

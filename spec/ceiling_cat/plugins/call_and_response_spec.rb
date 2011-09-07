@@ -118,5 +118,14 @@ describe "Call and Response" do
         CeilingCat::Plugin::CallAndResponse.new(event).handle
       end
     end
+
+    describe "when the call includes regex" do
+      it "should say the response" do
+        CeilingCat::Plugin::CallAndResponse.add(:call => "foo+", :response => @response)
+        event = CeilingCat::Event.new(@room, "fooooooooooooo", @registered_user)
+        @room.should_receive(:say).with(@response)
+        CeilingCat::Plugin::CallAndResponse.new(event).handle
+      end
+    end
   end
 end
