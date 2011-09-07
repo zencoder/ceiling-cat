@@ -128,4 +128,26 @@ describe "Call and Response" do
       end
     end
   end
+
+  describe "responding" do
+    it "should support old-style responses" do
+      @call = "Who's the cat that won't cop out when there's danger all about?"
+      @response = "SHAFT!"
+      CeilingCat::Plugin::CallAndResponse.add(:call => @call, :response => @response)
+
+      event = CeilingCat::Event.new(@room, @call, @registered_user)
+      @room.should_receive(:say).with(@response)
+      CeilingCat::Plugin::CallAndResponse.new(event).handle
+    end
+
+    it "should support new-style responses" do
+      @call = "Who's the cat that won't cop out when there's danger all about?"
+      @response = ["SHAFT!", "BATMAN!"]
+      CeilingCat::Plugin::CallAndResponse.add(:call => @call, :response => @response)
+
+      event = CeilingCat::Event.new(@room, @call, @registered_user)
+      @room.should_receive(:say).with(/#{@response.join("|")}/)
+      CeilingCat::Plugin::CallAndResponse.new(event).handle
+    end
+  end
 end
