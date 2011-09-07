@@ -1,10 +1,8 @@
 require 'rubygems'
-require 'ruby-debug'
+require 'bundler/setup'
+Bundler.require(:default, :development)
 
-require 'rspec'
 require 'ceiling_cat'
-require 'fakeweb'
-
 require 'ceiling_cat/storage/hash'
 
 FakeWeb.allow_net_connect = false
