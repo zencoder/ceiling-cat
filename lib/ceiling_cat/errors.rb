@@ -1,13 +1,8 @@
 module CeilingCat
-  class Error < StandardError
-
-    def initialize(message)
-      super message
-    end
-  end
+  class Error < StandardError; end
 
   # Gem Specific Errors
-  class CeilingCatError < StandardError; end
+  class CeilingCatError < CeilingCat::Error; end
 
   class UnsupportedChatServiceError < CeilingCatError; end
 
