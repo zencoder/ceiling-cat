@@ -3,7 +3,7 @@ module CeilingCat
     attr_accessor :config
 
     def initialize(config)
-      @config=config
+      @config = config
       @config.storage ||= CeilingCat::Storage::Hash
     end
 
