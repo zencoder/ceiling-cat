@@ -2,7 +2,7 @@ module CeilingCat
   class Event
     attr_accessor :room, :body, :user, :type, :time
 
-    def initialize(room, body,user,opts={})
+    def initialize(room, body, user, opts={})
       @room = room
       @body = body.to_s.strip
       @user = user
