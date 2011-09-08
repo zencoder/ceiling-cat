@@ -29,7 +29,7 @@ describe "Greeter" do
         CeilingCat::Plugin::Greeter.new(event).handle
       end
     end
-    
+
     describe "from a registered user" do
       before(:each) do
         @guest_user = CeilingCat::User.new("Member", :id => 12345, :role => "member")

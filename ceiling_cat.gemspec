@@ -32,7 +32,7 @@ campfire = ["lib/ceiling_cat/services/campfire.rb",
             "lib/ceiling_cat/services/campfire/connection.rb",
             "lib/ceiling_cat/services/campfire/event.rb",
             "lib/ceiling_cat/services/campfire/room.rb"]
-            
+
 irc = ["lib/ceiling_cat/services/irc.rb",
        "lib/ceiling_cat/services/irc/connection.rb",
        "lib/ceiling_cat/services/irc/event.rb",

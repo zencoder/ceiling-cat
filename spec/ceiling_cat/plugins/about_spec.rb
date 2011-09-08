@@ -6,10 +6,10 @@ describe "About" do
     subdomain = "subdomain"
     token = "1234abcd"
     plugins = [CeilingCat::Plugin::About]
-    
+
     FakeWeb.register_uri(:get, "https://#{token}:X@#{subdomain}.campfirenow.com/rooms.json", :body => fixture('campfire/rooms.json'), :status => ["200"])
     FakeWeb.register_uri(:get, "https://#{token}:X@#{subdomain}.campfirenow.com/users/me.json", :body => fixture('campfire/me.json'), :status => ["200"])
-    
+
     @connection = CeilingCat::Campfire::Connection.new(OpenStruct.new({:service => 'campfire', :subdomain => subdomain, :token => token, :room => 'Room 1', :plugins => plugins}))
     @room = CeilingCat::Campfire::Room.new(:connection => @connection, :room_name => @connection.config.room)
   end
@@ -26,7 +26,7 @@ describe "About" do
         CeilingCat::Plugin::About.new(event).handle
       end
     end
-    
+
     describe "calling the commands command" do
       it "should not list public commands" do
         event = CeilingCat::Event.new(@room,"!commands", @guest_user)
@@ -35,7 +35,7 @@ describe "About" do
       end
     end
   end
-  
+
   describe "a registered user" do
     before(:each) do
       @registered_user = CeilingCat::User.new("Guest", :id => 12345, :role => "member")
@@ -48,7 +48,7 @@ describe "About" do
         CeilingCat::Plugin::About.new(event).handle
       end
     end
-    
+
     describe "calling the commands command" do
       it "should not list public commands" do
         event = CeilingCat::Event.new(@room,"!commands", @registered_user)

@@ -10,7 +10,7 @@ module CeilingCat
           end
           super
         end
-        
+
       end
 
       def self.commands

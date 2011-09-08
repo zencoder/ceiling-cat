@@ -9,7 +9,7 @@ describe "Connection" do
       cc.config.plugins.should include(CeilingCat::Plugin::About)
     end
   end
-  
+
   describe "creating an instance" do
     it "uses the defaul if there's no storage option passed" do
       config = OpenStruct.new({:service => 'campfire', :subdomain => 'user', :token => '1234abcd', :room => 'Room'})

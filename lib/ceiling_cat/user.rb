@@ -7,11 +7,11 @@ module CeilingCat
       @id = opts[:id] || rand(10000000)
       @role = opts[:role] || "guest"
     end
-    
+
     def to_s
       short_name
     end
-    
+
     def short_name
       @name.to_s.split.compact.first
     end

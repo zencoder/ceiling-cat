@@ -13,7 +13,7 @@ module CeilingCat
           user_count = room.connection.total_user_count
           max_users = room.connection.config.max_users || 100
           if room.plugin_installed?("notifo") && user_count > max_users-2
-            room.plugin("notifo").new(@event).deliver("#{user_count} of #{max_users} max connections to Campfire.") 
+            room.plugin("notifo").new(@event).deliver("#{user_count} of #{max_users} max connections to Campfire.")
           end
         end
         super
@@ -45,4 +45,3 @@ module CeilingCat
     end
   end
 end
-    

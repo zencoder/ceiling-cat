@@ -47,11 +47,11 @@ module CeilingCat
       def room
         event.room
       end
-      
+
       def store
         self.class.store
       end
-      
+
       def self.store
         CeilingCat::Setup.config ? CeilingCat::Setup.config.storage : CeilingCat::Storage::Hash
       end
@@ -67,7 +67,7 @@ module CeilingCat
       def reply(message)
         room.say(message)
       end
-      
+
       def words
         body.split
       end
@@ -79,11 +79,11 @@ module CeilingCat
       def body_without_nick(text=body)
         text.sub(/^#{room.me.name}:?\s*/i,'').strip
       end
-      
+
       def body_without_nick_or_command(command,text=body)
         body_without_command(command, body_without_nick(text).sub(/^#{command}/i,"!#{command}"))
       end
-      
+
       def pluralize(n, singular, plural=nil)
         if n == 1
             "#{singular}"

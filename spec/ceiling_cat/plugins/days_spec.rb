@@ -52,7 +52,7 @@ describe "Days" do
         it "should return true if Date.parse works" do
           CeilingCat::Plugin::Days.is_a_date?("8/24/2011").should == true
         end
-        
+
         it "should return true if Date.parse works" do
           CeilingCat::Plugin::Days.is_a_date?("next tuesday").should == true
         end
@@ -71,13 +71,13 @@ describe "Days" do
           CeilingCat::Plugin::Days.is_a_holiday?("8/24/2011").should == false
         end
       end
-      
+
       describe "a weekend holiday" do
         before(:each) do
           @holiday = "8/20/2011"
           CeilingCat::Plugin::Days.add_to_holidays(@holiday)
         end
-        
+
         it "the weekend check should return true" do
           CeilingCat::Plugin::Days.is_a_weekend?(@holiday).should == true
         end
@@ -86,13 +86,13 @@ describe "Days" do
           CeilingCat::Plugin::Days.is_a_holiday?(@holiday).should == true
         end
       end
-      
+
       describe "a week day holiday" do
         before(:each) do
           @holiday = "8/24/2011"
           CeilingCat::Plugin::Days.add_to_holidays(@holiday)
         end
-        
+
         it "the weekend check should return false" do
           CeilingCat::Plugin::Days.is_a_weekend?(@holiday).should == false
         end
@@ -151,7 +151,7 @@ describe "Days" do
         end
       end
     end
-    
+
     describe "from a registered user" do
       before(:each) do
         @registered_user = CeilingCat::User.new("Guest", :id => 12345, :role => "member")

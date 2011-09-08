@@ -14,7 +14,7 @@ module CeilingCat
           @file
         end
 
-        # Sets the key +k+ to the value +v+ 
+        # Sets the key +k+ to the value +v+
         def []=(k, v)
           internal[k] = v
           persist!

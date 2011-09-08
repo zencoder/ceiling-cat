@@ -1,7 +1,7 @@
 module CeilingCat
   module Campfire
     class Event < CeilingCat::Event
-      
+
       def type
         case @type
         when "EnterMessage", :entrance
@@ -12,7 +12,7 @@ module CeilingCat
           :exit
         end
       end
-      
+
     end
   end
 end

@@ -17,11 +17,11 @@ module CeilingCat
           super
         end
       end
-      
+
       def self.name
         "Greeter"
       end
-      
+
       def self.description
         "Welcomes visitors and memebrs to chat."
       end

@@ -19,7 +19,7 @@ module CeilingCat
           irc.nick config.nickname
           irc.pass config.password if config.password.present?
           irc.user config.nickname, "+B", "*", config.nickname
-          
+
           while line = irc.read
             # Join a channel after MOTD
             if line.split[1] == '376'
@@ -31,7 +31,7 @@ module CeilingCat
               @ops_names << match[1] if match[2].include?("O")
               @ops_names.uniq!
             end
-            
+
             puts "Received: #{line}"
             begin
               if message = message_parts(line)
@@ -60,7 +60,7 @@ module CeilingCat
           irc.privmsg config.room, line
         end
       end
-      
+
       def users_in_room(opts={})
         @user_names.collect {|user_name|
           user_name = user_name.sub(/^@/,"")
@@ -76,7 +76,7 @@ module CeilingCat
           end
         }.compact
       end
-      
+
       def user_role(name)
         if @ops_names.include?(name)
           "member"
@@ -84,7 +84,7 @@ module CeilingCat
           "guest"
         end
       end
-      
+
       def is_me?(user)
         user.name == me.name
       end
@@ -92,7 +92,7 @@ module CeilingCat
       def me
         @me ||= CeilingCat::User.new(config.nickname, :role => "member")
       end
-      
+
       def message_parts(message)
         if message =~ /\sPRIVMSG\s/
           parts = message.match /^:(.+?)!(.+?)@(.+?)\sPRIVMSG\s(#.+):(.+)/i

@@ -21,19 +21,19 @@ Install the gem. You can use bundler and a Gemfile:
 or you can install it from the command line:
 
     $ gem install ceiling_cat
-  
+
 Once it's installed you'll see some directions on getting started, which are paraphrased here.
 
 In your Ceiling Cat's directory run
 
     $ ceiling_cat setup
-  
+
 to create the basic structure of a Ceiling Cat app. This will copy a Chatfile and Rakefile over for you and create a plugins folder.
 
 Edit your Chatfile with your Campfire credentials (more services coming soon) and then run
 
     $ ceiling_cat
-  
+
 and Ceiling Cat will start watching the room you specified.
 
 You mentioned something about plugins...
@@ -44,7 +44,7 @@ If you've loaded the About plugin, type
 
     !plugins
     !commands
-    
+
 in chat to see a list of the plugins you have currently loaded and the commands that each makes available. These commands are scoped by user role, so make sure you're on a registered (non-guest) account to see everything.
 
 ### About ###
@@ -95,7 +95,7 @@ Can I make my own plugins?
 Ceiling Cat comes with several plugins for you to use right away, but you can also create your own. Just run
 
     $ rake plugin:create name=plugin_name
-  
+
 where plugin_name is the name of your plugin, and the skeleton of a plugin will be created in the plugins folder. Require it in your Chatfile, add it to the plugins array in CeilingCat::Setup, and Ceiling Cat will start using your plugin while it watches you chat.
 
 Take a look at plugins/base.rb in the gem to see what methods are available to you.
@@ -106,12 +106,12 @@ Ceiling Cat can write to memory or to a YAML file. Set that up in your Chatfile 
 
     CeilingCat::Storage::Yaml.file = "ceilingcat.yml"
     config.storage = CeilingCat::Storage::Yaml
-    
+
 Once that's done all you have to do is call
 
     store["foo"] = "bar"
     store["foo"] #=> bar
-    
+
 and Ceiling Cat will store your data. Use YAML if you want your data to be persistent, or don't set anything and Ceiling Cat will write to memory.
 
 Contributing

@@ -62,21 +62,21 @@ describe "Notifo" do
           CeilingCat::Plugin::Notifo.active?.should == false
         end
       end
-      
+
       describe "credentials set without users" do
         it "should be false" do
           CeilingCat::Plugin::Notifo.set_credentials("username","api_secret")
           CeilingCat::Plugin::Notifo.active?.should == false
         end
       end
-      
+
       describe "users set without credentials" do
         it "should be false" do
           CeilingCat::Plugin::Notifo.add_users("zencoder")
           CeilingCat::Plugin::Notifo.active?.should == false
         end
       end
-      
+
       describe "users and credentials set" do
         it "should be true" do
           CeilingCat::Plugin::Notifo.add_users("zencoder")
@@ -92,7 +92,7 @@ describe "Notifo" do
       CeilingCat::Plugin::Notifo.add_users("ceiling_cat")
       CeilingCat::Plugin::Notifo.set_credentials("username","api_secret")
     end
-    
+
     describe "from a guest user" do
       before(:each) do
         @guest_user = CeilingCat::User.new("Guest", :id => 12345, :role => "guest")
@@ -130,7 +130,7 @@ describe "Notifo" do
         end
       end
     end
-    
+
     describe "from a registered user" do
       before(:each) do
         @registered_user = CeilingCat::User.new("Member", :id => 12345, :role => "member")

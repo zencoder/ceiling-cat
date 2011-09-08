@@ -9,8 +9,8 @@ module CeilingCat
       @type = opts[:type]
       @time = opts[:time] || Time.now
     end
-    
-    def handle 
+
+    def handle
       @room.plugins.each do |plugin|
         puts "running #{plugin}"
         begin
@@ -21,7 +21,7 @@ module CeilingCat
         end
       end
     end
-    
+
     def type # assume that all messages are just text unless the specific room type overrides it.
       @type || :chat
     end

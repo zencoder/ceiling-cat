@@ -11,7 +11,7 @@ module CeilingCat
       def campfire
         @campfire = Tinder::Campfire.new(self.config.subdomain, :token => self.config.token, :ssl => self.config.ssl)
       end
-      
+
       def total_user_count
         users = 0
         @campfire.rooms.each do |room|

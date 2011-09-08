@@ -17,11 +17,11 @@ CeilingCat::Setup.configure do |config|
   # config.nick = 'nickname'
   # config.password = 'Q7Af6laDKza2SOM'
   # config.room = '#my_room'
-  
+
   config.plugins = [CeilingCat::Plugin::About,
                     CeilingCat::Plugin::Greeter,
                     CeilingCat::Plugin::Calc]
-  
+
   # Some plugins require storage
   CeilingCat::Storage::Yaml.file = "ceilingcat.yml"
   config.storage = CeilingCat::Storage::Yaml

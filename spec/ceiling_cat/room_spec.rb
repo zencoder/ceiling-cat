@@ -1,5 +1,5 @@
 # require 'spec_helper'
-# 
+#
 # describe "CampfireRoom" do
 #   describe "creating an instance" do
 #     it "loads the Chatfile and sets config" do

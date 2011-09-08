@@ -28,7 +28,7 @@ module CeilingCat
           false
         end
       end
-      
+
       def active?
         self.class.active?
       end
@@ -45,7 +45,7 @@ module CeilingCat
         store["notifo_users"] ||= []
         store["notifo_users"] = (Array(store["notifo_users"]) + Array(users)).uniq
       end
-      
+
       def self.remove_users(users)
         store["notifo_users"] ||= []
         store["notifo_users"] = (Array(store["notifo_users"]) - Array(users)).uniq

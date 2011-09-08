@@ -29,7 +29,7 @@ module CeilingCat
         messages << "Run commands with '![command]' or '#{room.me.name}: [command]'"
         reply messages
       end
-      
+
       def list_users
         members = room.users_in_room(:type => "member")
         if members.size > 0
@@ -38,7 +38,7 @@ module CeilingCat
           reply "There are no registered users in the room at this time."
         end
       end
-      
+
       def list_guests
         guests = room.users_in_room(:type => "guest")
         if guests.size > 0
