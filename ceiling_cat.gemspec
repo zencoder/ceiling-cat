@@ -27,6 +27,7 @@ eos
   s.add_dependency "httparty", "0.7.8"
   s.add_dependency "crack", "0.1.8"
   s.add_dependency "irc-socket", "1.0.1"
+  s.add_dependency "twss", "~>0.0.5"
 
   s.add_development_dependency "rspec", "2.6.0"
   s.add_development_dependency "ruby-debug"
