@@ -84,8 +84,8 @@ describe "#{name.camelize}" do
     token = "1234abcd"
     plugins = [CeilingCat::Plugin::#{name.camelize}]
 
-    FakeWeb.register_uri(:get, "https://\#{token}:X@\#{user}.campfirenow.com/rooms.json", :body => fixture('campfire/rooms.json'), :status => ["200"])
-    FakeWeb.register_uri(:get, "https://\#{token}:X@\#{user}.campfirenow.com/users/me.json", :body => fixture('campfire/me.json'), :status => ["200"])
+    FakeWeb.register_uri(:get, "https://\#{token}:X@\#{subdomain}.campfirenow.com/rooms.json", :body => fixture('campfire/rooms.json'), :status => ["200"])
+    FakeWeb.register_uri(:get, "https://\#{token}:X@\#{subdomain}.campfirenow.com/users/me.json", :body => fixture('campfire/me.json'), :status => ["200"])
 
     @connection = CeilingCat::Campfire::Connection.new(OpenStruct.new({:service => 'campfire', :subdomain => subdomain, :token => token, :room => 'Room 1', :plugins => plugins}))
     @room = CeilingCat::Campfire::Room.new(:connection => @connection, :room_name => @connection.config.room)
