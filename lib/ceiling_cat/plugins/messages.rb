@@ -11,11 +11,13 @@ module CeilingCat
       def handle
         if event.type == :entrance
           messages = []
-          if messages_for_user = self.class.messages_for(user.name)
+          messages_for_user = self.class.messages_for(user.name)
+          if messages_for_user.size > 0
             messages << "Hey #{user.name}! I have a message to deliver to you:"
             messages += messages_for_user.collect{|message| "From #{message[:from]}: #{message[:body]}"}
             reply messages
           end
+          self.class.remove(messages_for_user)
           false
         else
           super
@@ -56,13 +58,18 @@ module CeilingCat
         store["messages"] = (store["messages"] + [{:to => opts[:to], :from => opts[:from], :body => opts[:body]}]).uniq
       end
       
+      def self.remove(*messages)
+        store["messages"] ||= []
+        store["messages"] = store["messages"].reject{ |message| messages.flatten.include?(message) }
+      end
+      
       def self.list
         store["messages"] ||= []
       end
       
       def self.messages_for(name)
         store["messages"] ||= []
-        store["messages"].find_all{ |message| message[:to] == name }
+        store["messages"].find_all{ |message| message[:to].downcase == name.downcase }
       end
     end
   end

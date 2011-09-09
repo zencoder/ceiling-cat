@@ -23,6 +23,13 @@ describe "Messages" do
       CeilingCat::Plugin::Messages.list.should include({:to => "Anna", :from => "Dutch", :body => "Get to the choppa!"})
     end
     
+    it "should remove a message" do
+      CeilingCat::Plugin::Messages.add(:to => "Anna", :from => "Dutch", :body => "Get to the choppa!")
+      CeilingCat::Plugin::Messages.add(:to => "Dutch", :from => "Predator", :body => "clikclikclikclikclik")
+      CeilingCat::Plugin::Messages.remove({:to => "Dutch", :from => "Predator", :body => "clikclikclikclikclik"})
+      CeilingCat::Plugin::Messages.list.should == [{:to => "Anna", :from => "Dutch", :body => "Get to the choppa!"}]
+    end
+
     it "should search messages" do
       CeilingCat::Plugin::Messages.add(:to => "Anna", :from => "Dutch", :body => "Get to the choppa!")
       CeilingCat::Plugin::Messages.add(:to => "Dutch", :from => "Predator", :body => "clikclikclikclikclik")
@@ -44,7 +51,7 @@ describe "Messages" do
           CeilingCat::Plugin::Messages.new(event).handle
           CeilingCat::Plugin::Messages.list.should include({:to => "Chris Warren", :from => "Guest", :body => "You need to update Ceiling Cat."})
         end
-        
+
         it "should not save a message if the receipient is around" do
           event = CeilingCat::Event.new(@room,"!message for Jane Doe: You need to update Ceiling Cat.", @guest_user)
           @room.should_receive(:say).with("Why leave that messsage? Jane Doe is here!")
@@ -66,7 +73,7 @@ describe "Messages" do
           CeilingCat::Plugin::Messages.new(event).handle
           CeilingCat::Plugin::Messages.list.should include({:to => "Chris Warren", :from => "Member", :body => "You need to update Ceiling Cat."})
         end
-        
+
         it "should not save a message if the receipient is around" do
           event = CeilingCat::Event.new(@room,"!message for Jane Doe: You need to update Ceiling Cat.", @registered_user)
           @room.should_receive(:say).with("Why leave that messsage? Jane Doe is here!")
@@ -86,25 +93,45 @@ describe "Messages" do
           @guest_user = CeilingCat::User.new("Anna", :id => 12345, :role => "guest", :type => :entrance)
           @event = CeilingCat::Event.new(@room, nil, @guest_user, :type => :entrance)
         end
-        
-        it "should deliver the message and return a response of false" do
+
+        it "should deliver the message" do
           @room.should_receive(:say).with(["Hey Anna! I have a message to deliver to you:", "From Dutch: Get to the choppa!"])
-          response = CeilingCat::Plugin::Messages.new(@event).handle
-          response.should == false
+          CeilingCat::Plugin::Messages.new(@event).handle
+        end
+
+        it "return a response of false" do
+          @room.should_receive(:say)
+          CeilingCat::Plugin::Messages.new(@event).handle.should == false
+        end
+
+        it "should remove the message after it has been delivered" do
+          @room.should_receive(:say)
+          CeilingCat::Plugin::Messages.new(@event).handle
+          CeilingCat::Plugin::Messages.list.should_not include({:to => "Anna", :from => "Dutch", :body => "Get to the choppa!"})
         end
       end
-      
+
       describe "as a member" do
         before(:each) do
           CeilingCat::Plugin::Messages.add(:to => "Anna", :from => "Dutch", :body => "Get to the choppa!")
           @registered_user = CeilingCat::User.new("Anna", :id => 12345, :role => "member", :type => :entrance)
           @event = CeilingCat::Event.new(@room, nil, @registered_user, :type => :entrance)
         end
-        
-        it "should deliver the message and return a response of false" do
+
+        it "should deliver the message" do
           @room.should_receive(:say).with(["Hey Anna! I have a message to deliver to you:", "From Dutch: Get to the choppa!"])
-          response = CeilingCat::Plugin::Messages.new(@event).handle
-          response.should == false
+          CeilingCat::Plugin::Messages.new(@event).handle
+        end
+
+        it "return a response of false" do
+          @room.should_receive(:say)
+          CeilingCat::Plugin::Messages.new(@event).handle.should == false
+        end
+
+        it "should remove the message after it has been delivered" do
+          @room.should_receive(:say)
+          CeilingCat::Plugin::Messages.new(@event).handle
+          CeilingCat::Plugin::Messages.list.should_not include({:to => "Anna", :from => "Dutch", :body => "Get to the choppa!"})
         end
       end
     end
