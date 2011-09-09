@@ -89,6 +89,14 @@ Set up Notifo in your Chatfile
 
     CeilingCat::Plugin::Notifo.set_credentials('service_name','api_secret')
     CeilingCat::Plugin::Notifo.add_users(%w{ notifo_account })
+    
+### TWSS ###
+
+That's what she said! Let Ceiling Cat (usually incorrectly) jump in to your conversations when someone says something that would make Michael Scott chuckle.
+
+### Messages ###
+
+Leave messages for someone else so she doesn't forget to review that new feature for you.
 
 Can I make my own plugins?
 ------------
