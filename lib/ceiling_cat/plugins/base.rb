@@ -12,6 +12,7 @@ module CeilingCat
           begin
             if command[:public] || user.is_registered?
               self.send command[:method]
+              return true
             end
           rescue => e
             reply "There was an error: #{$!}"
