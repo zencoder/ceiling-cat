@@ -17,6 +17,18 @@ describe "Notifo" do
   end
 
   describe "base methods" do
+    describe "deliver" do
+      it "should raise an error if credentials aren't defined" do
+        lambda{ CeilingCat::Plugin::Notifo.deliver("cdw","This is a test") }.should raise_error CeilingCat::NotifoNotConfiguredError
+      end
+
+      it "should send a notifo message" do
+        FakeWeb.register_uri(:post, "https://username:api_secret@api.notifo.com/v1/send_notification")
+        CeilingCat::Plugin::Notifo.set_credentials("username","api_secret")
+        CeilingCat::Plugin::Notifo.deliver("cdw","This is a test")
+      end
+    end
+
     describe "administrating users" do
       describe "adding users" do
         it "should save a single user" do
@@ -64,9 +76,9 @@ describe "Notifo" do
       end
 
       describe "credentials set without users" do
-        it "should be false" do
+        it "should be true" do
           CeilingCat::Plugin::Notifo.set_credentials("username","api_secret")
-          CeilingCat::Plugin::Notifo.active?.should == false
+          CeilingCat::Plugin::Notifo.active?.should == true
         end
       end
 

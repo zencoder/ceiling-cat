@@ -1,6 +1,8 @@
 require 'httparty'
 
 module CeilingCat
+  class NotifoNotConfiguredError < CeilingCatError; end
+
   module Plugin
     class Notifo < CeilingCat::Plugin::Base
       def self.commands
@@ -10,19 +12,26 @@ module CeilingCat
          {:command => "list notifo users", :description => "List users who get Notifos - '!list notifo users'.", :method => "list_users"}]
       end
 
-      def deliver(message=nil)
+      def deliver(message=nil,opts={})
         message ||= body_without_nick_or_command("notifo")
+        users = Array(opts[:users]) || Array(store["notifo_users"])
+        users.each do |user|
+          CeilingCat::Plugin::Notifo.deliver(message,user)
+        end
+      end
+
+      def self.deliver(user,message)
         if active?
-          Array(store["notifo_users"]).each do |user|
-            HTTParty.post("https://api.notifo.com/v1/send_notification",
-                            :body => { :to => user, :msg => message },
-                            :basic_auth => {:username => store["notifo_credentials"][:username], :password => store["notifo_credentials"][:api_secret]})
-          end
+          HTTParty.post("https://api.notifo.com/v1/send_notification",
+                          :body => { :to => user, :msg => message },
+                          :basic_auth => {:username => store["notifo_credentials"][:username], :password => store["notifo_credentials"][:api_secret]})
+        else
+          raise NotifoNotConfiguredError
         end
       end
 
       def self.active?
-        if store["notifo_credentials"] && store["notifo_credentials"][:username].present? && store["notifo_credentials"][:api_secret].present? && Array(store["notifo_users"]).size > 0
+        if store["notifo_credentials"] && store["notifo_credentials"][:username].present? && store["notifo_credentials"][:api_secret].present?
           true
         else
           false
