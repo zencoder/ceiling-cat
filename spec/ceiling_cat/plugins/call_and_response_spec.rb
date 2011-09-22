@@ -98,6 +98,7 @@ describe "Call and Response" do
 
   describe "matching" do
     before(:each) do
+      @registered_user = CeilingCat::User.new("Guest", :id => 12345, :role => "member")
       @call = "Who's the cat that won't cop out when there's danger all about?"
       @response = "SHAFT!"
       CeilingCat::Plugin::CallAndResponse.add(:call => @call, :response => @response)
@@ -131,6 +132,7 @@ describe "Call and Response" do
 
   describe "responding" do
     it "should support old-style responses" do
+      @registered_user = CeilingCat::User.new("Guest", :id => 12345, :role => "member")
       @call = "Who's the cat that won't cop out when there's danger all about?"
       @response = "SHAFT!"
       CeilingCat::Plugin::CallAndResponse.add(:call => @call, :response => @response)
@@ -147,6 +149,21 @@ describe "Call and Response" do
 
       event = CeilingCat::Event.new(@room, @call, @registered_user)
       @room.should_receive(:say).with(/#{@response.join("|")}/)
+      CeilingCat::Plugin::CallAndResponse.new(event).handle
+    end
+  end
+
+  describe "when a call matches a command" do
+    before do
+      @registered_user = CeilingCat::User.new("Guest", :id => 12345, :role => "member")
+      @call = "Who's the cat that won't cop out when there's danger all about?"
+      @response = "SHAFT!"
+      CeilingCat::Plugin::CallAndResponse.add(:call => @call, :response => @response)
+    end
+
+    it "should execute the command, not the call" do
+      event = CeilingCat::Event.new(@room, "!remove call #{@call}", @registered_user)
+      @room.should_receive(:say).with("Call removed.")
       CeilingCat::Plugin::CallAndResponse.new(event).handle
     end
   end

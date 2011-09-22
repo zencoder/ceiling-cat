@@ -2,15 +2,13 @@ module CeilingCat
   module Plugin
     class CallAndResponse < CeilingCat::Plugin::Base
       def handle
-        if event.type == :chat
+        if !super && event.type == :chat
           if match = self.class.list.find{|car| body =~ Regexp.new(car[:call],true) }
             response = [match[:response]].flatten # Support old responses which are strings, not arrays
             reply response[Kernel.rand(response.size)]
             return nil
           end
-          super
         end
-
       end
 
       def self.commands
