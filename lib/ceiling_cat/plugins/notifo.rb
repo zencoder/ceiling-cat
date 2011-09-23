@@ -6,17 +6,20 @@ module CeilingCat
   module Plugin
     class Notifo < CeilingCat::Plugin::Base
       def self.commands
-        [{:command => "notifo", :description => "Send a message with Notifo - '!notifo Hey, get in here!'.", :method => "deliver"},
+        [{:command => "notifo", :description => "Send a message with Notifo - '!notifo user: Hey, get in here!'. 'user:' is optional, and will go to everyone if not passed.", :method => "deliver"},
          {:command => "add notifo users", :description => "Add users to get Notifos - '!add notifo users username1 username2'.", :method => "add_users"},
          {:command => "remove notifo users", :description => "Add users to get Notifos - '!remove notifo users username1 username2'.", :method => "remove_users"},
          {:command => "list notifo users", :description => "List users who get Notifos - '!list notifo users'.", :method => "list_users"}]
       end
 
-      def deliver(message=nil,opts={})
-        message ||= body_without_nick_or_command("notifo")
-        users = Array(opts[:users]) || Array(store["notifo_users"])
+      def deliver(message=nil)
+        body_parts = body_without_nick_or_command("notifo").scan(/^((\w+):)?(.+)$/)[0]
+        message ||= body_parts[2].strip
+        user = body_parts[1]
+
+        users = user ? Array(user.strip) : Array(store["notifo_users"])
         users.each do |user|
-          CeilingCat::Plugin::Notifo.deliver(message,user)
+          CeilingCat::Plugin::Notifo.deliver(user,message)
         end
       end
 

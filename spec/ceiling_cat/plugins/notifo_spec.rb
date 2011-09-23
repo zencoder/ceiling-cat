@@ -23,7 +23,7 @@ describe "Notifo" do
       end
 
       it "should send a notifo message" do
-        FakeWeb.register_uri(:post, "https://username:api_secret@api.notifo.com/v1/send_notification")
+        FakeWeb.register_uri(:post, "https://username:api_secret@api.notifo.com/v1/send_notification", :body => '')
         CeilingCat::Plugin::Notifo.set_credentials("username","api_secret")
         CeilingCat::Plugin::Notifo.deliver("cdw","This is a test")
       end
@@ -150,10 +150,48 @@ describe "Notifo" do
 
       describe "calling the 'notifo' command" do
         it "should send a message via notifo" do
-          message = "you should get in here"
+          message = "you should get in here."
           event = CeilingCat::Event.new(@room,"!notifo #{message}", @registered_user)
           @room.should_not_receive(:say)
-          CeilingCat::Plugin::Notifo.any_instance.should_receive(:deliver)
+          CeilingCat::Plugin::Notifo.should_receive(:deliver).with("ceiling_cat","you should get in here.")
+          HTTParty.stub(:post)
+          CeilingCat::Plugin::Notifo.new(event).handle
+        end
+      end
+
+      describe "calling the 'notifo' command with multiple users" do
+        before(:each) do
+          CeilingCat::Plugin::Notifo.add_users("zencoder")
+        end
+
+        it "should send a message to everyone via notifo" do
+          message = "you should get in here."
+          event = CeilingCat::Event.new(@room,"!notifo #{message}", @registered_user)
+
+          @room.should_not_receive(:say)
+          CeilingCat::Plugin::Notifo.should_receive(:deliver).with("ceiling_cat","you should get in here.")
+          CeilingCat::Plugin::Notifo.should_receive(:deliver).with("zencoder","you should get in here.")
+          HTTParty.stub(:post)
+          CeilingCat::Plugin::Notifo.new(event).handle
+        end
+
+        it "should send a message to a single user via notifo" do
+          message = "ceiling_cat: you should get in here."
+          event = CeilingCat::Event.new(@room,"!notifo #{message}", @registered_user)
+
+          @room.should_not_receive(:say)
+          CeilingCat::Plugin::Notifo.should_receive(:deliver).with("ceiling_cat","you should get in here.")
+          CeilingCat::Plugin::Notifo.should_not_receive(:deliver).with("zencoder","you should get in here.")
+          HTTParty.stub(:post)
+          CeilingCat::Plugin::Notifo.new(event).handle
+        end
+
+        it "should send a message containing a url to a single user via notifo" do
+          message = "ceiling_cat: you should check out http://example.com."
+          event = CeilingCat::Event.new(@room,"!notifo #{message}", @registered_user)
+
+          @room.should_not_receive(:say)
+          CeilingCat::Plugin::Notifo.should_receive(:deliver).with("ceiling_cat","you should check out http://example.com.")
           HTTParty.stub(:post)
           CeilingCat::Plugin::Notifo.new(event).handle
         end
