@@ -12,10 +12,10 @@ module CeilingCat
          {:command => "list notifo users", :description => "List users who get Notifos - '!list notifo users'.", :method => "list_users"}]
       end
 
-      def deliver(message=nil)
+      def deliver(message=nil,user=nil)
         body_parts = body_without_nick_or_command("notifo").scan(/^((\w+):)?(.+)$/)[0]
         message ||= body_parts[2].strip
-        user = body_parts[1]
+        user ||= body_parts[1]
 
         users = user ? Array(user.strip) : Array(store["notifo_users"])
         users.each do |user|
