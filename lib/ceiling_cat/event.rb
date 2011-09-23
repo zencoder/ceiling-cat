@@ -12,7 +12,6 @@ module CeilingCat
 
     def handle
       @room.plugins.each do |plugin|
-        puts "running #{plugin}"
         begin
           response = plugin.new(self).handle
           break if response.present?
