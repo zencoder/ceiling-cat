@@ -52,7 +52,7 @@ module CeilingCat
       end
 
       def remove
-        self.class.remove(body_without_nick_or_command("remove image phrase"))
+        self.class.remove(body_without_nick_or_command("remove call"))
         reply "Call removed."
       end
 
