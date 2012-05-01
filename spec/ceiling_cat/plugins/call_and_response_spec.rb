@@ -19,14 +19,14 @@ describe "Call and Response" do
   describe "base methods" do
     it "should add a call and response" do
       CeilingCat::Plugin::CallAndResponse.add(:call => "foo", :response => "bar")
-      CeilingCat::Plugin::CallAndResponse.list.should include({:call => "foo", :response => "bar"})
+      CeilingCat::Plugin::CallAndResponse.list.should include({:call => "foo", :response => "bar", :frequency => nil})
     end
 
     it "should remove a call and response" do
       CeilingCat::Plugin::CallAndResponse.add(:call => "foo", :response => "bar")
-      CeilingCat::Plugin::CallAndResponse.list.should include({:call => "foo", :response => "bar"})
+      CeilingCat::Plugin::CallAndResponse.list.should include({:call => "foo", :response => "bar", :frequency => nil})
       CeilingCat::Plugin::CallAndResponse.remove("foo")
-      CeilingCat::Plugin::CallAndResponse.list.should_not include({:call => "foo", :response => "bar"})
+      CeilingCat::Plugin::CallAndResponse.list.should_not include({:call => "foo", :response => "bar", :frequency => nil})
     end
   end
 
@@ -86,11 +86,23 @@ describe "Call and Response" do
         end
       end
 
+      describe "calling the 'add random call' command" do
+        it "should add a call with a random flag" do
+          event = CeilingCat::Event.new(@room,"!add random call 5 you say something | something witty", @registered_user)
+          @room.should_receive(:say).with("Call and Response added.")
+          CeilingCat::Plugin::CallAndResponse.new(event).handle
+          CeilingCat::Plugin::CallAndResponse.list.should include({:call => "you say something", :response => ["something witty"], :frequency => 5})
+        end
+      end
+
       describe "calling the 'remove call' command" do
         it "should remove a call" do
+          CeilingCat::Plugin::CallAndResponse.add(:call => "you say something", :response => "i say something back")
           event = CeilingCat::Event.new(@room,"!remove call you say something", @registered_user)
           @room.should_receive(:say).with("Call removed.")
+          CeilingCat::Plugin::CallAndResponse.list.should include({:call => "you say something", :response => "i say something back", :frequency => nil})
           CeilingCat::Plugin::CallAndResponse.new(event).handle
+          CeilingCat::Plugin::CallAndResponse.list.should_not include({:call => "you say something", :response => "i say something back", :frequency => nil})
         end
       end
     end
@@ -149,6 +161,30 @@ describe "Call and Response" do
 
       event = CeilingCat::Event.new(@room, @call, @registered_user)
       @room.should_receive(:say).with(/#{@response.join("|")}/)
+      CeilingCat::Plugin::CallAndResponse.new(event).handle
+    end
+
+    it "should respond when frequency is set and the random number is greater than the frequency" do
+      @call = "Who's the cat that won't cop out when there's danger all about?"
+      @response = ["SHAFT!", "BATMAN!"]
+      @frequency = 5
+      CeilingCat::Plugin::CallAndResponse.add(:call => @call, :response => @response, :frequency => @frequency)
+
+      Kernel.stub(:rand).and_return(6,0) # 0 to handle the later use of rand to pick a random response
+      event = CeilingCat::Event.new(@room, @call, @registered_user)
+      @room.should_receive(:say).with(/#{@response.join("|")}/)
+      CeilingCat::Plugin::CallAndResponse.new(event).handle
+    end
+
+    it "should not respond when frequency is set and the random number is less than the frequency" do
+      @call = "Who's the cat that won't cop out when there's danger all about?"
+      @response = ["SHAFT!", "BATMAN!"]
+      @frequency = 5
+      CeilingCat::Plugin::CallAndResponse.add(:call => @call, :response => @response, :frequency => @frequency)
+
+      Kernel.stub(:rand).and_return(4,0) # 0 to handle the later use of rand to pick a random response
+      event = CeilingCat::Event.new(@room, @call, @registered_user)
+      @room.should_not_receive(:say)
       CeilingCat::Plugin::CallAndResponse.new(event).handle
     end
   end
